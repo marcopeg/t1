@@ -1,0 +1,48 @@
+#
+# If you are about to go for a coffee run this command, it will force
+# a full rebuild of the Docker images that are needed to run this project
+#
+prebuild:
+	HUMBLE_ENV=dev humble pull
+	HUMBLE_ENV=dev humble build api --no-cache
+	HUMBLE_ENV=dev humble build app --no-cache
+	HUMBLE_ENV=dev humble build build --no-cache
+	HUMBLE_ENV=prod humble build webapp --no-cache
+
+#
+# Development Commands
+#
+
+db:
+	HUMBLE_ENV=dev humble up -d postgres
+
+api: db
+	HUMBLE_ENV=dev humble build api
+	HUMBLE_ENV=dev humble up -d api
+	HUMBLE_ENV=dev humble logs -f api
+
+app:
+	HUMBLE_ENV=dev humble build app
+	HUMBLE_ENV=dev humble up -d app
+	HUMBLE_ENV=dev humble logs -f app
+
+build:
+	HUMBLE_ENV=dev humble build build
+	HUMBLE_ENV=dev humble up build
+
+undev:
+	HUMBLE_ENV=dev humble down
+
+
+#
+# Production Commands
+#
+
+prod:
+	HUMBLE_ENV=prod humble build webapp
+	HUMBLE_ENV=prod humble up -d
+	HUMBLE_ENV=prod humble logs -f
+
+unprod:
+	HUMBLE_ENV=prod humble down
+
