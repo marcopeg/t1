@@ -4,10 +4,10 @@
 #
 prebuild:
 	HUMBLE_ENV=dev humble pull
-	HUMBLE_ENV=dev humble build api --no-cache
-	HUMBLE_ENV=dev humble build app --no-cache
-	HUMBLE_ENV=dev humble build build --no-cache
-	HUMBLE_ENV=prod humble build webapp --no-cache
+	HUMBLE_ENV=dev humble build --no-cache api
+	HUMBLE_ENV=dev humble build --no-cache app
+	HUMBLE_ENV=dev humble build --no-cache build
+	HUMBLE_ENV=prod humble build --no-cache webapp
 
 #
 # Development Commands
