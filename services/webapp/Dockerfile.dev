@@ -24,8 +24,3 @@ ADD ssr /usr/src/app/ssr
 ADD src /usr/src/app/src
 ADD public /usr/src/app/public
 
-# Default environment configuration:
-EXPOSE 8080
-EXPOSE 3000
-
-#CMD ./node_modules/.bin/nodemon --watch ssr --watch build -e js index.dev.js
