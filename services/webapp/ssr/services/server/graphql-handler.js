@@ -1,10 +1,15 @@
 import { GraphQLSchema, GraphQLObjectType } from 'graphql'
 import expressGraphql from 'express-graphql'
+import { createHook } from 'ssr/lib/hook'
 
 const isDev = [ 'development', 'test' ].indexOf(process.env.NODE_ENV) !== -1
 
-export const createGraphQLHandler = ({ queries, mutations }) => {
+export const createGraphQLHandler = async ({ queries, mutations }) => {
     const schema = {}
+
+    await createHook('server/graphql', {
+        args: { queries, mutations }
+    })
 
     if (queries) {
         schema.query = new GraphQLObjectType({

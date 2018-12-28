@@ -11,8 +11,10 @@ import { createGraphQLHandler } from './graphql-handler'
 const app = express()
 app.settings = {}
 
-export const init = async ({ loginDuration, graphql, port }) => {
+export const init = async (settings, createHook) => {
     logInfo('[server] init...')
+    const { loginDuration, graphql, port } = settings
+
     app.settings.port = port
 
     // Basics
@@ -33,8 +35,12 @@ export const init = async ({ loginDuration, graphql, port }) => {
         header: 'x-device-id',
     }))
 
+    await createHook('server/routes', {
+        args: { app },
+    })
+
     // Routes
-    app.use('/api', createGraphQLHandler(graphql))
+    app.use('/api', await createGraphQLHandler(graphql))
     app.use(createSSRRouter({ port }))
 }
 
@@ -44,10 +50,10 @@ export const start = () => {
     app.listen(app.settings.port, logStart)
 }
 
-export const register = ({ registerHook }) => {
+export const register = ({ registerHook, createHook }) => {
     const meta = { name: 'service/server' }
 
-    const initHandler = ({ server }) => init(server)
+    const initHandler = ({ server }) => init(server, createHook)
     const startHandler = ({ server }) => start(server)
 
     registerHook('initServices', initHandler, meta)

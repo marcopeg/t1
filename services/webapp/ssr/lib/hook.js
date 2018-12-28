@@ -1,5 +1,6 @@
 
 const hooks = {}
+const trace = []
 
 // wrap a single hook error and creates a rich error type
 // that contains info regarding it's logical origin
@@ -13,6 +14,7 @@ const onItemError = (err, hookName, action) => {
     const error = new Error(`[${hookName}] ${feature}${message}`)
     error.originalError = err
     error.action = action
+    error.meta = action.meta
     throw error
 }
 
@@ -47,6 +49,13 @@ export const createHook = async (name, receivedOptions = {}) => {
 
     const actions = hooks[name]
         .filter(h => h.enabled === true)
+
+    // keep track of what is happening
+    trace.push({
+        hook: name,
+        options,
+        actions,
+    })
 
     if (options.async === 'parallel') {
         try {
@@ -92,3 +101,14 @@ export const createHook = async (name, receivedOptions = {}) => {
     }
 }
 
+export const traceHook = (compact = false) => {
+    if (!compact) return [...trace]
+
+    return trace.map(item => ({
+        hook: item.hook,
+        async: item.options.async,
+        actions: item.actions.map(action =>
+            (action.meta ? action.meta.name : 'n/a') || 'no meta'
+        )
+    }))
+}
