@@ -1,13 +1,17 @@
 
-export const register = ({ registerHook }) => {
+export const register = ({ registerHook, createHook }) => {
     const meta = { name: 'feature/foo' }
 
-    registerHook('initFeatures', () => {
+    registerHook('initFeature', () => {
         console.log('init FOO')
     }, meta)
 
-    registerHook('startFeature', () => new Promise((resolve) => {
+    registerHook('startFeature', () => new Promise(async (resolve) => {
         console.log('startFeature FOO...')
+
+        await createHook('whenFooStart')
+        await createHook('dewdew')
+
         setTimeout(() => {
             console.log('resolve FOO afterStart')
             resolve()

@@ -11,7 +11,7 @@ import { createGraphQLHandler } from './graphql-handler'
 const app = express()
 app.settings = {}
 
-export const init = ({ loginDuration, graphql, port }) => {
+export const init = async ({ loginDuration, graphql, port }) => {
     logInfo('[server] init...')
     app.settings.port = port
 

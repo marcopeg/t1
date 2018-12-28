@@ -12,4 +12,5 @@ export const register = ({ registerHook }) => {
             resolve('foooo')
         }, 1000)
     }), meta)
+
 }

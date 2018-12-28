@@ -17,6 +17,13 @@ export const boot = ({ services, features, settings }) => async () => {
         async: 'serie',
         args: { settings },
     })
+    
+    for (const feature of features) {
+        if (feature.register) await feature.register({
+            registerHook,
+            createHook,
+        })
+    }
 
     await createHook('initService', {
         async: 'serie',
@@ -27,13 +34,6 @@ export const boot = ({ services, features, settings }) => async () => {
         async: 'parallel',
         args: { ...settings },
     })
-
-    for (const feature of features) {
-        if (feature.register) await feature.register({
-            registerHook,
-            createHook,
-        })
-    }
 
     await createHook('initFeature', {
         async: 'serie',
