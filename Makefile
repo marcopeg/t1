@@ -16,10 +16,17 @@ prebuild:
 db:
 	HUMBLE_ENV=dev humble up -d postgres
 
-api: db
+dev: db
 	HUMBLE_ENV=dev humble build api
 	HUMBLE_ENV=dev humble up -d api
 	HUMBLE_ENV=dev humble logs -f api
+
+undev:
+	HUMBLE_ENV=dev humble down
+
+#
+# Client App
+#
 
 app:
 	HUMBLE_ENV=dev humble build app
@@ -30,8 +37,6 @@ build:
 	HUMBLE_ENV=dev humble build build
 	HUMBLE_ENV=dev humble up build
 
-undev:
-	HUMBLE_ENV=dev humble down
 
 
 #

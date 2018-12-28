@@ -4,7 +4,7 @@
 
 Terminal 1 - postgres & backend API
 
-    make api
+    make dev
 
 Terminal 2 - frontend with Webpack
 
