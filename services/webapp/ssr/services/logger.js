@@ -8,4 +8,7 @@ export {
 } from '@marcopeg/utils/lib/logger'
 
 export const register = ({ registerHook }) =>
-    registerHook('boot', init, { name: 'service/logger' })
+    registerHook('boot', {
+        action: 'service.logger.init',
+        handler: init,
+    })

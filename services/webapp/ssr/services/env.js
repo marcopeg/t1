@@ -23,7 +23,7 @@ const loadEnv = async (fileName, root) => {
     }
 }
 
-const init = async (args) => {
+const initEnv = async (args) => {
     const cwd = args.cwd || process.cwd()
     await loadEnv('.env', cwd)
     await loadEnv('.env.local', cwd)
@@ -32,4 +32,7 @@ const init = async (args) => {
 }
 
 export const register = ({ registerHook }) =>
-    registerHook('boot', init, { name: 'service/env' })
+    registerHook('boot', {
+        action: 'service.env.init',
+        handler: initEnv,
+    })

@@ -7,11 +7,13 @@ export { default as query } from './query'
 export { getModel, registerModel, resetModels } from './conn'
 
 export const register = ({ registerHook }) => {
-    const meta = { name: 'service/postgres' }
+    registerHook('initServices', {
+        action: 'service.postgres.init',
+        handler: ({ postgres }) => init(postgres),
+    })
 
-    const initHandler = ({ postgres }) => init(postgres)
-    const startHandler = ({ postgres }) => start(postgres)
-
-    registerHook('initServices', initHandler, meta)
-    registerHook('startServices', startHandler, meta)
+    registerHook('startServices', {
+        action: 'service.postgres.start',
+        handler: ({ postgres }) => start(postgres),
+    })
 }

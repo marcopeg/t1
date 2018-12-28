@@ -36,10 +36,10 @@ export const verify = (token, customSecret = secret) =>
         })
     })
 
-export const register = ({ registerHook }) => {
-    const handler = ({ jwt }) => init(jwt)
-    const meta = { name: 'service/jwt' }
-    registerHook('initServices', handler, meta)
-}
+export const register = ({ registerHook }) =>
+    registerHook('initServices', {
+        action: 'service.jwt.init',
+        handler: ({ jwt }) => init(jwt),
+    })
 
 export default { sign, verify }

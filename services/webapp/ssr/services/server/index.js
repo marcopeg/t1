@@ -51,11 +51,13 @@ export const start = () => {
 }
 
 export const register = ({ registerHook, createHook }) => {
-    const meta = { name: 'service/server' }
+    registerHook('initServices', {
+        action: 'service.server.init',
+        handler: ({ server }) => init(server, createHook),
+    })
 
-    const initHandler = ({ server }) => init(server, createHook)
-    const startHandler = ({ server }) => start(server)
-
-    registerHook('initServices', initHandler, meta)
-    registerHook('startServices', startHandler, meta)
+    registerHook('startServices', {
+        action: 'service.server.start',
+        handler: ({ server }) => start(server),
+    })
 }
