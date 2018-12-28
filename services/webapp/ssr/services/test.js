@@ -16,3 +16,9 @@ export const validateToken = (token) => {
 
     return true
 }
+
+export const register = ({ registerHook }) => {
+    const meta = { name: 'service/test' }
+    const initHandler = ({ test }) => init(test)
+    registerHook('initServices', initHandler, meta)
+}

@@ -1,23 +1,35 @@
+/**
+ * Extends `process.env` with informations from local files:
+ * 
+ * .env
+ * .env.local
+ * .env.[development|production|...]
+ * .env.[development|production|...].local
+ * 
+ */
+
 import path from 'path'
 import fs from 'fs'
 import nodeEnvFile from 'node-env-file'
 
-const file2root = fileName => path.join(__dirname, '..', '..', fileName)
-
-const fileExists = fileName => new Promise((resolve, reject) => {
-    fs.exists(file2root(fileName), exists => exists ? resolve(true) : resolve(false))
+const fileExists = filePath => new Promise((resolve, reject) => {
+    fs.exists(filePath, exists => exists ? resolve(true) : resolve(false))
 })
 
-const loadEnv = async (fileName) => {
-    const exists = await fileExists(fileName)
-    if (exists) {
-        nodeEnvFile(file2root(fileName))
+const loadEnv = async (fileName, root) => {
+    const filePath = path.join(root, fileName)
+    if (await fileExists(filePath)) {
+        nodeEnvFile(filePath)
     }
 }
 
-export const init = async () => {
-    await loadEnv('.env')
-    await loadEnv('.env.local')
-    await loadEnv(`.env.${process.env.NODE_ENV}`)
-    await loadEnv(`.env.${process.env.NODE_ENV}.local`)
+const init = async (args) => {
+    const cwd = args.cwd || process.cwd()
+    await loadEnv('.env', cwd)
+    await loadEnv('.env.local', cwd)
+    await loadEnv(`.env.${process.env.NODE_ENV}`, cwd)
+    await loadEnv(`.env.${process.env.NODE_ENV}.local`, cwd)
 }
+
+export const register = ({ registerHook }) =>
+    registerHook('boot', init, { name: 'service/env' })

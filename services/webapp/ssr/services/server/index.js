@@ -43,3 +43,13 @@ export const start = () => {
     const logStart = () => logInfo(`[server] express is running on ${app.settings.port}`)
     app.listen(app.settings.port, logStart)
 }
+
+export const register = ({ registerHook }) => {
+    const meta = { name: 'service/server' }
+
+    const initHandler = ({ server }) => init(server)
+    const startHandler = ({ server }) => start(server)
+
+    registerHook('initServices', initHandler, meta)
+    registerHook('startServices', startHandler, meta)
+}

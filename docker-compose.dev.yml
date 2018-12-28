@@ -30,7 +30,7 @@ services:
             NODE_ENV: development
             BABEL_ENV: node 
             REACT_SSR: "true"
-            LOG_LEVEL: error
+            LOG_LEVEL: verbose
             PG_HOST: postgres
             PG_PORT: 5432
             PG_DATABASE: ${PG_DATABASE:-postgres}
