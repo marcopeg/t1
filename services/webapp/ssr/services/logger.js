@@ -9,6 +9,6 @@ export {
 
 export const register = ({ registerHook }) =>
     registerHook('boot', {
-        action: 'service.logger.init',
+        action: 'logger',
         handler: init,
     })

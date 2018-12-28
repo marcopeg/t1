@@ -1,40 +1,39 @@
 import { GraphQLString } from 'graphql'
-import { traceHook } from 'ssr/lib/hook'
+import { traceHook, createHook } from 'ssr/lib/hook'
 
 export const register = ({ registerHook }) => {
-    const meta = { name: 'feature/fii', foo: 123 }
+    registerHook('service/server/routes', {
+        action: 'feature/fii',
+        handler: ({ app }) => {
+            app.use('/fii', (req, res) => {
+                
+                const data = {
+                    text: 'fiii',
+                }
 
-    // registerHook('initFeature', () => {
-    //     console.log('init FII')
-    // }, meta)
+                createHook('feature/fii', {
+                    args: { data },
+                    ctx: req.hookCtx,
+                })
 
-    // registerHook('startFeature', () => new Promise((resolve, reject) => {
-    //     console.log('startFeature FII...')
-    //     setTimeout(() => {
-    //         console.log('resolve FII startFeature')
-    //         resolve('foooo')
-    //     }, 1000)
-    // }), meta)
-
-
-    registerHook('server/routes', ({ app }) => {
-        app.use('/fii', (req, res) => {
-            res.send({
-                text: 'fiiii',
-                trace:  traceHook(true),
+                res.send({
+                    ...data,
+                    trace:  traceHook(req.hookCtx)('compact')('json'),
+                })
             })
-        })
-    
-    }, meta)
+        
+        },
+    })
 
-    registerHook('server/graphql', ({ queries }) => {
-        console.log('************')
-        console.log(queries)
-        queries.fii = {
-            description: 'Provides fii functions',
-            type: GraphQLString,
-            resolve: () => 'fiiiiiiii',
-        }
-    }, meta)
+    registerHook('service/graphql', {
+        action: 'feature/fii',
+        handler: ({ queries }) => {
+            queries.fii = {
+                description: 'Provides fii functions',
+                type: GraphQLString,
+                resolve: () => 'fiiiiiiii',
+            }
+        },
+    })
 
 }

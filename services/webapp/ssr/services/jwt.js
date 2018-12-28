@@ -38,7 +38,7 @@ export const verify = (token, customSecret = secret) =>
 
 export const register = ({ registerHook }) =>
     registerHook('initServices', {
-        action: 'service.jwt.init',
+        action: 'jwt',
         handler: ({ jwt }) => init(jwt),
     })
 

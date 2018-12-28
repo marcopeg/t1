@@ -4,15 +4,12 @@ import { registerHook, traceHook, createHookApp } from 'ssr/lib/hook';
 import services from './services'
 import features from './features'
 
-import grahqlQueries from './graphql-queries'
-import grahqlMutations from './graphql-mutations'
-
 require('es6-promise').polyfill()
 require('isomorphic-fetch')
 
 registerHook('settings', {
     name: 'settings',
-    action: 'boot.settings',
+    action: 'boot',
     handler: ({ settings }) => {
         settings.hash = {
             rounds: Number(config.get('BCRYPT_ROUNDS')),
@@ -38,21 +35,21 @@ registerHook('settings', {
             nodeEnv: config.get('NODE_ENV'),
             port: config.get('SERVER_PORT'),
             loginDuration: String(config.get('LOGIN_DURATION')),
-            graphql: {
-                queries: grahqlQueries,
-                mutations: grahqlMutations,
-            },
         }
     
         settings.test = {
             isEnabled: [ 'development', 'test' ].indexOf(process.env.NODE_ENV) !== -1,
             token: config.get('GRAPHQL_TEST_TOKEN'),
         }
+
+        settings.graphql = {
+            mountPoint: config.get('GRAPHQL_MOUNT_POINT'),
+        }
     },
 })
 
 registerHook('up', {
-    action: 'boot.trace',
+    action: 'boot',
     handler: () => {
         console.log('')
         console.log('')
@@ -61,6 +58,7 @@ registerHook('up', {
         console.log(traceHook()('compact')('json'))
         console.log('')
         console.log('')
+        // console.log(traceHook.getHooks('service/server/routes'))
     },
 })
 

@@ -4,6 +4,8 @@ export default [
     require('./hash'),
     require('./jwt'),
     require('./postgres'),
+    require('./graphql'),
+    require('./ssr'),
     require('./server'),
     require('./test'),
 ]

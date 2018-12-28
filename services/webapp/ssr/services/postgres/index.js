@@ -8,12 +8,12 @@ export { getModel, registerModel, resetModels } from './conn'
 
 export const register = ({ registerHook }) => {
     registerHook('initServices', {
-        action: 'service.postgres.init',
+        action: 'postgres',
         handler: ({ postgres }) => init(postgres),
     })
 
     registerHook('startServices', {
-        action: 'service.postgres.start',
+        action: 'postgres',
         handler: ({ postgres }) => start(postgres),
     })
 }

@@ -27,7 +27,7 @@ const log = (text) => {
 }
 
 const logAction = (text, action) => {
-    const name = `${action.hook}/${action.name}`
+    const name = `${action.name}@${action.hook}`
     const trace = action.trace && action.trace !== 'unknown' ? `(origin: ${action.trace})` : ''
     log(`[hook] ${text} - "${name}" ${trace}`)
 }
@@ -37,7 +37,13 @@ const traceAction = (action, options) => {
     if (!trace[ctx]) {
         trace[ctx] = []
     }
-    trace[ctx].push(action)
+
+    trace[ctx].push({
+        hook: action.hook,
+        name: action.name,
+        trace: action.trace,
+        meta: action.meta,
+    })
 }
 
 const runAction = async (action, options) => {
@@ -69,7 +75,7 @@ const defaultOptions = {
 }
 
 export const registerHook = (name, payload = {}) => {
-    const {trace, handler, ...meta } = payload
+    const {action, trace, handler, ...meta } = payload
     if (!name) {
         throw new Error('[hook] handlers must have a "name" property!')
     }
@@ -78,10 +84,10 @@ export const registerHook = (name, payload = {}) => {
     }
 
     const actionName = false
-        || meta.action
+        || action
         || (handler.name !== 'handler' ? handler.name : 'unknown')
 
-    const action = {
+    const actionPayload = {
         enabled: true,
         hook: name,
         name: actionName,
@@ -90,12 +96,12 @@ export const registerHook = (name, payload = {}) => {
         handler,
     }
 
-    logAction('register', action)
+    logAction('register', actionPayload)
 
     if (!hooks[name]) {
         hooks[name] = []
     }
-    hooks[name].push(action)
+    hooks[name].push(actionPayload)
 }
 
 export const createHook = async (name, receivedOptions = {}) => {
@@ -155,11 +161,15 @@ export const traceHook = (ctx = 'boot') =>
                         meta: record.meta,
                     }
                 case 'compact':
-                    return `${record.hook}/${record.name}`
+                    return `${record.name}@${record.hook}`
                 default:
                     throw new Error(`[hook] unknown trace density "${density}"`)
             }
         })
+
+        // console.log('')
+        // console.log(Object.keys(trace).length)
+        // console.log('')
     
         return (output = 'json') => {
             switch (output) {
@@ -173,6 +183,8 @@ export const traceHook = (ctx = 'boot') =>
             }
         }
     }
+
+traceHook.getHooks = a => hooks[a]
 
 
 export const createHookApp = ({ services, features, settings }) =>
@@ -249,3 +261,21 @@ export const createHookApp = ({ services, features, settings }) =>
         })
     }
 
+/**
+ * ExpressJS Middleware
+ *
+ * creates a unique context name that can be used to trace request
+ * related hooks.
+ * 
+ * the entire trace gets removed after a while to keep memory under control.
+ */
+let ctxCount = 0
+export const createHookCtx = (settings = {}) => (req, res, next) => {
+    req.hookCtx = ctxCount++
+
+    setTimeout(() => {
+        delete trace[req.hookCtx]
+    }, settings.duration || 5000)
+
+    next()
+}

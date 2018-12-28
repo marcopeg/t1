@@ -2,20 +2,23 @@ import express from 'express'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
+import { createHook, createHookCtx } from 'ssr/lib/hook'
 import { logInfo } from 'ssr/services/logger'
-import { createSSRRouter } from '@marcopeg/react-ssr/lib/create-ssr-router'
 import { cookieHelper } from './cookie-helper'
 import { deviceId } from './device-id'
-import { createGraphQLHandler } from './graphql-handler'
 
 const app = express()
 app.settings = {}
 
-export const init = async (settings, createHook) => {
+export const init = async (settings) => {
     logInfo('[server] init...')
-    const { loginDuration, graphql, port } = settings
+    const { loginDuration, port } = settings
 
     app.settings.port = port
+
+    // hook - enable a tracing context that is scoped
+    // into the current request
+    app.use(createHookCtx())
 
     // Basics
     app.use(compression())
@@ -35,13 +38,20 @@ export const init = async (settings, createHook) => {
         header: 'x-device-id',
     }))
 
-    await createHook('server/routes', {
+    await createHook('service/server/middlewares', {
+        async: 'serie',
         args: { app },
     })
 
-    // Routes
-    app.use('/api', await createGraphQLHandler(graphql))
-    app.use(createSSRRouter({ port }))
+    await createHook('service/server/routes', {
+        async: 'parallel',
+        args: { app },
+    })
+    
+    await createHook('service/server/handlers', {
+        async: 'serie',
+        args: { app },
+    })
 }
 
 export const start = () => {
@@ -50,14 +60,14 @@ export const start = () => {
     app.listen(app.settings.port, logStart)
 }
 
-export const register = ({ registerHook, createHook }) => {
+export const register = ({ registerHook }) => {
     registerHook('initServices', {
-        action: 'service.server.init',
-        handler: ({ server }) => init(server, createHook),
+        action: 'server',
+        handler: ({ server }) => init(server),
     })
 
     registerHook('startServices', {
-        action: 'service.server.start',
+        action: 'server',
         handler: ({ server }) => start(server),
     })
 }

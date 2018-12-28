@@ -41,6 +41,6 @@ export const encode = input => new Promise((resolve, reject) => {
 
 export const register = ({ registerHook }) =>
     registerHook('initServices', {
-        action: 'service.hash.init',
+        action: 'hash',
         handler: ({ hash }) => init(hash),
     })
