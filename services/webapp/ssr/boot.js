@@ -1,11 +1,27 @@
 import * as config from '@marcopeg/utils/lib/config'
 import { registerHook, traceHook, createHookApp } from 'ssr/lib/hooks'
 
-import services from './services'
-import features from './features'
-
 require('es6-promise').polyfill()
 require('isomorphic-fetch')
+
+const services = [
+    require('./services/env'),
+    require('./services/logger'),
+    require('./services/hash'),
+    require('./services/jwt'),
+    require('./services/postgres'),
+    require('./services/express/cookie-helper'),
+    require('./services/express/device-id'),
+    require('./services/express/graphql'),
+    require('./services/express/graphql-test'),
+    require('./services/express/ssr'),
+    require('./services/express'),
+]
+
+const features = [
+    require('./features/foo'),
+    require('./features/fii'),
+]
 
 registerHook('◇ settings', {
     action: '◇ settings',
@@ -46,7 +62,7 @@ registerHook('◇ settings', {
             },
         }
 
-        settings.test = {
+        settings.graphqlTest = {
             isEnabled: [ 'development', 'test' ].indexOf(process.env.NODE_ENV) !== -1,
             token: config.get('GRAPHQL_TEST_TOKEN'),
         }

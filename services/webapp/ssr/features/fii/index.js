@@ -27,13 +27,24 @@ export const register = ({ registerHook }) => {
         },
     })
 
-    registerHook('→ express-graphql', {
+    registerHook('→ express/graphql', {
         action: '▶ fii',
         handler: ({ queries }) => {
             queries.fii = {
                 description: 'Provides fii functions',
                 type: GraphQLString,
                 resolve: () => 'fiiiiiiii',
+            }
+        },
+    })
+    
+    registerHook('→ express/graphql-test', {
+        action: '▶ fii',
+        handler: ({ queries }) => {
+            queries.fii = {
+                description: 'Provides fii functions',
+                type: GraphQLString,
+                resolve: () => 'fiiiiiiii-test',
             }
         },
     })

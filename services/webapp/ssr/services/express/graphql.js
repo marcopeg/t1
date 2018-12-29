@@ -19,8 +19,8 @@ export const createGraphQLHandler = async () => {
         graphiql: isDev,
     }
 
-    await createHook('→ express-graphql', {
-        async: 'parallel',
+    await createHook('→ express/graphql', {
+        async: 'serie',
         args: {
             queries,
             mutations,
