@@ -13,7 +13,7 @@ export const deviceId = ({ scope, header }) => {
 
 export const register = ({ registerHook }) =>
     registerHook('→ express/middlewares', {
-        action: '→ express-device-id',
+        action: '→ express/device-id',
         trace: __filename,
         handler: ({ app, settings }) => app.use(deviceId(settings.deviceId)),
     })

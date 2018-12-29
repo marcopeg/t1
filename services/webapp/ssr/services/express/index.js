@@ -25,12 +25,7 @@ export const init = async (settings) => {
     app.use(helmet())
 
     // COOKIES
-    // allow routes and controllers to set a cookie
     app.use(cookieParser())
-    // app.use(cookieHelper({
-    //     scope: 't1',
-    //     duration: loginDuration,
-    // }))
 
     await createHook('→ express/middlewares', {
         async: 'serie',

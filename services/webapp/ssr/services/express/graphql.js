@@ -1,7 +1,7 @@
 import { GraphQLSchema, GraphQLObjectType, GraphQLString } from 'graphql'
 import expressGraphql from 'express-graphql'
 import { createHook } from 'ssr/lib/hooks'
-import ssr from '../../package.json'
+import ssr from '../../../package.json'
 
 const info = {
     description: 'Provides info regarding the project',
@@ -53,7 +53,7 @@ export const createGraphQLHandler = async () => {
 
 export const register = ({ registerHook }) =>
     registerHook('→ express/routes', {
-        action: '→ express-graphql',
+        action: '→ express/graphql',
         trace: __filename,
         handler: async ({ app, settings }) => {
             const { mountPoint } = settings.graphql

@@ -1,11 +1,11 @@
 /**
  * Extends `process.env` with informations from local files:
- * 
+ *
  * .env
  * .env.local
  * .env.[development|production|...]
  * .env.[development|production|...].local
- * 
+ *
  */
 
 import path from 'path'

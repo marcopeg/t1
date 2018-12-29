@@ -33,7 +33,10 @@ registerHook('◇ settings', {
         settings.express = {
             nodeEnv: config.get('NODE_ENV'),
             port: config.get('SERVER_PORT'),
-            loginDuration: String(config.get('LOGIN_DURATION')),
+            cookieHelper: {
+                scope: 't1',
+                duration: String(config.get('LOGIN_DURATION')),
+            },
             deviceId: {
                 scope: 'xDeviceId',
                 header: 'x-device-id',

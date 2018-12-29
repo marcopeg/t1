@@ -26,3 +26,11 @@ export const cookieHelper = ({ scope, duration }) =>
 
         next()
     }
+
+export const register = ({ registerHook }) =>
+    registerHook('→ express/middlewares', {
+        action: '→ express/cookie-helper',
+        trace: __filename,
+        handler: async ({ app, settings }) =>
+            app.use(cookieHelper(settings.cookieHelper)),
+    })
