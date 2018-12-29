@@ -4,8 +4,8 @@ import { GraphQLString } from 'graphql'
 import { traceHook, createHook } from 'ssr/lib/hooks'
 
 export const register = ({ registerHook }) => {
-    registerHook('service/server/routes', {
-        action: 'feature/fii',
+    registerHook('→ express/routes', {
+        action: '▶ fii',
         handler: ({ app }) => {
             app.use('/fii', (req, res) => {
                 
@@ -13,7 +13,7 @@ export const register = ({ registerHook }) => {
                     text: 'fiii',
                 }
 
-                createHook('feature/fii', {
+                createHook('▶ fii', {
                     args: { data },
                     ctx: req.hookCtx,
                 })
@@ -27,8 +27,8 @@ export const register = ({ registerHook }) => {
         },
     })
 
-    registerHook('service/graphql', {
-        action: 'feature/fii',
+    registerHook('→ express-graphql', {
+        action: '▶ fii',
         handler: ({ queries }) => {
             queries.fii = {
                 description: 'Provides fii functions',

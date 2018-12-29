@@ -19,7 +19,7 @@ export const createGraphQLHandler = async () => {
         graphiql: isDev,
     }
 
-    await createHook('service/graphql', {
+    await createHook('→ express-graphql', {
         async: 'parallel',
         args: {
             queries,
@@ -51,25 +51,15 @@ export const createGraphQLHandler = async () => {
     })(req, res)
 }
 
-export const register = ({ registerHook }) => {
-    let mountPoint = null
-
-    registerHook('initServices', {
-        action: 'graphql',
+export const register = ({ registerHook }) =>
+    registerHook('→ express/routes', {
+        action: '→ express-graphql',
         trace: __filename,
-        handler: ({ graphql }) => {
-            mountPoint = graphql.mountPoint
-        },
-    })
-
-    registerHook('service/server/routes', {
-        action: 'graphql',
-        trace: __filename,
-        handler: async ({ app }) => {
+        handler: async ({ app, settings }) => {
+            const { mountPoint } = settings.graphql
             if (mountPoint === null) {
                 throw new Error('[graphql] mount point not defined')
             }
             app.use(mountPoint, await createGraphQLHandler())
         },
     })
-}

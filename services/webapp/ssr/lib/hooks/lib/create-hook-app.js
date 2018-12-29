@@ -13,12 +13,12 @@ export const createHookApp = ({ services, features, settings }) =>
             }
         }
 
-        await createHook('boot', {
+        await createHook('◇ boot', {
             async: 'serie',
             args: { ...settings },
         })
 
-        await createHook('settings', {
+        await createHook('◇ settings', {
             async: 'serie',
             args: { settings },
         })
@@ -33,47 +33,47 @@ export const createHookApp = ({ services, features, settings }) =>
             }
         }
 
-        await createHook('initService', {
+        await createHook('◇ init::service', {
             async: 'serie',
             args: { ...settings },
         })
 
-        await createHook('initServices', {
+        await createHook('◇ init::services', {
             async: 'parallel',
             args: { ...settings },
         })
 
-        await createHook('initFeature', {
+        await createHook('◇ init::feature', {
             async: 'serie',
             args: { ...settings },
         })
 
-        await createHook('initFeatures', {
+        await createHook('◇ init::features', {
             async: 'parallel',
             args: { ...settings },
         })
 
-        await createHook('startService', {
+        await createHook('◇ start::service', {
             async: 'serie',
             args: { ...settings },
         })
 
-        await createHook('startServices', {
+        await createHook('◇ start::services', {
             async: 'parallel',
             args: { ...settings },
         })
 
-        await createHook('startFeature', {
+        await createHook('◇ start::feature', {
             async: 'serie',
             args: { ...settings },
         })
 
-        await createHook('startFeatures', {
+        await createHook('◇ start::features', {
             async: 'parallel',
             args: { ...settings },
         })
 
-        await createHook('up', {
+        await createHook('◇ up', {
             async: 'serie',
             args: { ...settings },
         })

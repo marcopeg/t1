@@ -7,9 +7,8 @@ import features from './features'
 require('es6-promise').polyfill()
 require('isomorphic-fetch')
 
-registerHook('settings', {
-    name: 'settings',
-    action: 'boot',
+registerHook('◇ settings', {
+    action: '◇ settings',
     handler: ({ settings }) => {
         settings.hash = {
             rounds: Number(config.get('BCRYPT_ROUNDS')),
@@ -31,31 +30,34 @@ registerHook('settings', {
             models: [],
         }
 
-        settings.server = {
+        settings.express = {
             nodeEnv: config.get('NODE_ENV'),
             port: config.get('SERVER_PORT'),
             loginDuration: String(config.get('LOGIN_DURATION')),
+            deviceId: {
+                scope: 'xDeviceId',
+                header: 'x-device-id',
+            },
+            graphql: {
+                mountPoint: config.get('GRAPHQL_MOUNT_POINT'),
+            },
         }
 
         settings.test = {
             isEnabled: [ 'development', 'test' ].indexOf(process.env.NODE_ENV) !== -1,
             token: config.get('GRAPHQL_TEST_TOKEN'),
         }
-
-        settings.graphql = {
-            mountPoint: config.get('GRAPHQL_MOUNT_POINT'),
-        }
     },
 })
 
-registerHook('up', {
-    action: 'boot',
+registerHook('◇ up', {
+    action: '◇ boot',
     handler: () => {
         console.log('')
         console.log('')
         console.log('Boot Trace:')
         console.log('=================')
-        console.log(traceHook()('compact')('cli'))
+        console.log(traceHook()('compact')('cli').join('\n'))
         console.log('')
         console.log('')
         // console.log(traceHook()('full')('json'))

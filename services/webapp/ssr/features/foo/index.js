@@ -1,8 +1,8 @@
 /* eslint-disable */
 
 export const register = ({ registerHook, createHook }) => {
-    registerHook('feature/fii', {
-        action: 'feature/foo',
+    registerHook('▶ fii', {
+        action: '▶ foo',
         handler: ({ data }) => {
             data.text += 'handled by foo'
         },

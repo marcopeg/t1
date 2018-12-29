@@ -4,8 +4,9 @@ export default [
     require('./hash'),
     require('./jwt'),
     require('./postgres'),
-    require('./graphql'),
-    require('./ssr'),
-    require('./server'),
+    require('./express-device-id'),
+    require('./express-graphql'),
+    require('./express-ssr'),
+    require('./express'),
     require('./test'),
 ]

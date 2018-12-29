@@ -66,9 +66,9 @@ export const traceHook = (ctx = 'boot') =>
                         stack: record.stack,
                     }
                 case 'compact':
-                    const depth = '----'.repeat(record.stack.length - 1)
+                    const depth = '  '.repeat(record.stack.length - 1)
                     return {
-                        hook: `${depth}${depth.length ? '> ' : ''}${record.name}@${record.hook} - ${record.priority}`,
+                        hook: `${depth}${record.name} ${record.hook}`,
                         stack: record.stack,
                     }
                 default:

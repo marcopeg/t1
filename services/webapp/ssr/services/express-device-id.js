@@ -10,3 +10,10 @@ export const deviceId = ({ scope, header }) => {
         next()
     }
 }
+
+export const register = ({ registerHook }) =>
+    registerHook('→ express/middlewares', {
+        action: '→ express-device-id',
+        trace: __filename,
+        handler: ({ app, settings }) => app.use(deviceId(settings.deviceId)),
+    })

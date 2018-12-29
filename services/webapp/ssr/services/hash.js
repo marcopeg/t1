@@ -40,8 +40,8 @@ export const encode = input => new Promise((resolve, reject) => {
 })
 
 export const register = ({ registerHook }) =>
-    registerHook('initServices', {
-        action: 'hash',
+    registerHook('◇ init::services', {
+        action: '→ hash',
         trace: __filename,
         handler: ({ hash }) => init(hash),
     })
