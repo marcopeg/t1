@@ -1,5 +1,7 @@
+/* eslint-disable */
+
 import { GraphQLString } from 'graphql'
-import { traceHook, createHook } from 'ssr/lib/hook'
+import { traceHook, createHook } from 'ssr/lib/hooks'
 
 export const register = ({ registerHook }) => {
     registerHook('service/server/routes', {

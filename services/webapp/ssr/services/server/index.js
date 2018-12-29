@@ -2,7 +2,7 @@ import express from 'express'
 import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
-import { createHook, createHookCtx } from 'ssr/lib/hook'
+import { createHook, createHookContext } from 'ssr/lib/hooks'
 import { logInfo } from 'ssr/services/logger'
 import { cookieHelper } from './cookie-helper'
 import { deviceId } from './device-id'
@@ -18,7 +18,7 @@ export const init = async (settings) => {
 
     // hook - enable a tracing context that is scoped
     // into the current request
-    app.use(createHookCtx())
+    app.use(createHookContext())
 
     // Basics
     app.use(compression())

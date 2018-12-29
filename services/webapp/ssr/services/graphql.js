@@ -1,6 +1,6 @@
 import { GraphQLSchema, GraphQLObjectType, GraphQLString } from 'graphql'
 import expressGraphql from 'express-graphql'
-import { createHook } from 'ssr/lib/hook'
+import { createHook } from 'ssr/lib/hooks'
 import ssr from '../../package.json'
 
 const info = {
@@ -9,13 +9,12 @@ const info = {
     resolve: () => `${ssr.name} v${ssr.version}`,
 }
 
-
-const isDev = [ 'development', 'test' ].indexOf(process.env.NODE_ENV) !== -1
-
 export const createGraphQLHandler = async () => {
-    const queries = { info }
-    const mutations = { info }
-    const context = { data: {} }
+    const isDev = [ 'development', 'test' ].indexOf(process.env.NODE_ENV) !== -1
+
+    const queries = { info }
+    const mutations = { info }
+    const context = { data: {} }
     const config = {
         graphiql: isDev,
     }
@@ -38,7 +37,7 @@ export const createGraphQLHandler = async () => {
         mutation: new GraphQLObjectType({
             name: 'RootMutation',
             fields: mutations,
-        })
+        }),
     }
 
     return (req, res) => expressGraphql({
@@ -64,7 +63,7 @@ export const register = ({ registerHook }) => {
 
     registerHook('service/server/routes', {
         action: 'graphql',
-        handler: async({ app }) => {
+        handler: async ({ app }) => {
             if (mountPoint === null) {
                 throw new Error('[graphql] mount point not defined')
             }

@@ -1,3 +1,4 @@
+/* eslint-disable */
 
 export const register = ({ registerHook, createHook }) => {
     registerHook('feature/fii', {
