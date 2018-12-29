@@ -1,5 +1,5 @@
-import { default as init } from './init'
-import { default as start } from './start'
+import { default as init } from './init'
+import { default as start } from './start'
 
 export { default as init } from './init'
 export { default as start } from './start'
@@ -9,11 +9,13 @@ export { getModel, registerModel, resetModels } from './conn'
 export const register = ({ registerHook }) => {
     registerHook('initServices', {
         action: 'postgres',
+        trace: __filename,
         handler: ({ postgres }) => init(postgres),
     })
 
     registerHook('startServices', {
         action: 'postgres',
+        trace: __filename,
         handler: ({ postgres }) => start(postgres),
     })
 }

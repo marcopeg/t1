@@ -56,6 +56,7 @@ export const register = ({ registerHook }) => {
 
     registerHook('initServices', {
         action: 'graphql',
+        trace: __filename,
         handler: ({ graphql }) => {
             mountPoint = graphql.mountPoint
         },
@@ -63,6 +64,7 @@ export const register = ({ registerHook }) => {
 
     registerHook('service/server/routes', {
         action: 'graphql',
+        trace: __filename,
         handler: async ({ app }) => {
             if (mountPoint === null) {
                 throw new Error('[graphql] mount point not defined')

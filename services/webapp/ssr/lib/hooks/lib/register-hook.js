@@ -2,7 +2,7 @@ import { appendAction } from './state'
 import { logAction } from './logger'
 
 export const registerHook = (name, payload = {}) => {
-    const { action, trace, handler, ...meta } = payload
+    const { action, trace, handler, priority, ...meta } = payload
     if (!name) {
         throw new Error('[hook] handlers must have a "name" property!')
     }
@@ -21,6 +21,7 @@ export const registerHook = (name, payload = {}) => {
         trace: trace || 'unknown',
         meta,
         handler,
+        priority: priority || 0,
     }
 
     logAction('register', actionPayload)

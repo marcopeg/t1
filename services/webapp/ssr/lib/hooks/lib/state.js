@@ -10,6 +10,7 @@ export const appendAction = (hook, action) => {
         state.hooks[hook] = []
     }
     state.hooks[hook].push(action)
+    state.hooks[hook].sort((a, b) => b.priority - a.priority)
 }
 
 export const appendTrace = (ctx, payload) => {

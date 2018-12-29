@@ -55,9 +55,10 @@ registerHook('up', {
         console.log('')
         console.log('Boot Trace:')
         console.log('=================')
-        console.log(traceHook()('compact')('json'))
+        console.log(traceHook()('compact')('cli'))
         console.log('')
         console.log('')
+        // console.log(traceHook()('full')('json'))
         // console.log(traceHook.getHooks('service/server/routes'))
     },
 })

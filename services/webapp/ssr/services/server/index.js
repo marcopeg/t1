@@ -44,10 +44,10 @@ export const init = async (settings) => {
     })
 
     await createHook('service/server/routes', {
-        async: 'parallel',
+        async: 'serie',
         args: { app },
     })
-    
+
     await createHook('service/server/handlers', {
         async: 'serie',
         args: { app },
@@ -63,11 +63,13 @@ export const start = () => {
 export const register = ({ registerHook }) => {
     registerHook('initServices', {
         action: 'server',
+        trace: __filename,
         handler: ({ server }) => init(server),
     })
 
     registerHook('startServices', {
         action: 'server',
+        trace: __filename,
         handler: ({ server }) => start(server),
     })
 }

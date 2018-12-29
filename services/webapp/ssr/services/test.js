@@ -20,5 +20,6 @@ export const validateToken = (token) => {
 export const register = ({ registerHook }) =>
     registerHook('initServices', {
         action: 'service.test.init',
+        trace: __filename,
         handler: ({ test }) => init(test),
     })
