@@ -36,4 +36,11 @@ export const verify = (token, customSecret = secret) =>
         })
     })
 
+export const register = ({ registerAction }) =>
+    registerAction('◇ init::services', {
+        action: '→ jwt',
+        trace: __filename,
+        handler: ({ jwt }) => init(jwt),
+    })
+
 export default { sign, verify }

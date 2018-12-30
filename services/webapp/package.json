@@ -36,6 +36,7 @@
   ],
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
+    "@marcopeg/hooks": "^0.0.1",
     "@marcopeg/react-ssr": "0.0.18",
     "@marcopeg/utils": "^1.12.0",
     "bcrypt-nodejs": "^0.0.3",

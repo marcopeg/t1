@@ -38,3 +38,10 @@ export const encode = input => new Promise((resolve, reject) => {
         }
     })
 })
+
+export const register = ({ registerAction }) =>
+    registerAction('◇ init::services', {
+        action: '→ hash',
+        trace: __filename,
+        handler: ({ hash }) => init(hash),
+    })

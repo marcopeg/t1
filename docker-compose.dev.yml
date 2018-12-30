@@ -30,7 +30,7 @@ services:
             NODE_ENV: development
             BABEL_ENV: node 
             REACT_SSR: "true"
-            LOG_LEVEL: error
+            LOG_LEVEL: verbose
             PG_HOST: postgres
             PG_PORT: 5432
             PG_DATABASE: ${PG_DATABASE:-postgres}
@@ -43,6 +43,7 @@ services:
             JWT_SECRET: ${JWT_SECRET:-12345}
             JWT_DURATION: ${JWT_DURATION:-30d}
             LOGIN_DURATION: ${LOGIN_DURATION:-30d}
+            GRAPHQL_MOUNT_POINT: ${GRAPHQL_MOUNT_POINT:-/api}
             GRAPHQL_TEST_TOKEN: ${GRAPHQL_TEST_TOKEN:-12345}
             REACT_APP_SSR_USE_CACHE: ${REACT_APP_SSR_USE_CACHE:-no}
         volumes:

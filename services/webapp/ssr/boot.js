@@ -1,74 +1,91 @@
 import * as config from '@marcopeg/utils/lib/config'
-import * as envService from 'ssr/services/env'
-import * as loggerService from 'ssr/services/logger'
-import * as hashService from 'ssr/services/hash'
-import * as jwtService from 'ssr/services/jwt'
-import * as postgresService from 'ssr/services/postgres'
-import * as serverService from 'ssr/services/server'
-import * as testService from 'ssr/services/test'
-import grahqlQueries from './graphql-queries'
-import grahqlMutations from './graphql-mutations'
-import features from 'ssr/features'
+import { registerAction, traceHook, createHookApp } from '@marcopeg/hooks'
 
 require('es6-promise').polyfill()
 require('isomorphic-fetch')
 
-const boot = async () => {
-    await envService.init()
-    await loggerService.init()
+const services = [
+    require('./services/env'),
+    require('./services/logger'),
+    require('./services/hash'),
+    require('./services/jwt'),
+    require('./services/postgres'),
+    require('./services/express/cookie-helper'),
+    require('./services/express/device-id'),
+    require('./services/express/graphql'),
+    require('./services/express/graphql-test'),
+    require('./services/express/ssr'),
+    require('./services/express'),
+]
 
-    await Promise.all([
-        hashService.init({
+const features = [
+    require('./features/foo'),
+    require('./features/fii'),
+]
+
+registerAction('◇ settings', {
+    action: '♦ boot',
+    handler: ({ settings }) => {
+        settings.hash = {
             rounds: Number(config.get('BCRYPT_ROUNDS')),
-        }),
-        jwtService.init({
+        }
+
+        settings.jwt = {
             secret: String(config.get('JWT_SECRET')),
             duration: String(config.get('JWT_DURATION')),
-        }),
-        postgresService.init({
+        }
+
+        settings.postgres = {
             host: config.get('PG_HOST'),
             port: config.get('PG_PORT'),
             database: config.get('PG_DATABASE'),
             username: config.get('PG_USERNAME'),
             password: config.get('PG_PASSWORD'),
-        }),
-        serverService.init({
+            maxAttempts: Number(config.get('PG_MAX_CONN_ATTEMPTS')),
+            attemptDelay: Number(config.get('PG_CONN_ATTEMPTS_DELAY')),
+            models: [],
+        }
+
+        settings.express = {
             nodeEnv: config.get('NODE_ENV'),
             port: config.get('SERVER_PORT'),
-            loginDuration: String(config.get('LOGIN_DURATION')),
-            graphql: {
-                queries: grahqlQueries,
-                mutations: grahqlMutations,
+            cookieHelper: {
+                scope: 't1',
+                duration: String(config.get('LOGIN_DURATION')),
             },
-        }),
-        testService.init({
+            deviceId: {
+                scope: 'xDeviceId',
+                header: 'x-device-id',
+            },
+            graphql: {
+                mountPoint: config.get('GRAPHQL_MOUNT_POINT'),
+            },
+        }
+
+        settings.graphqlTest = {
             isEnabled: [ 'development', 'test' ].indexOf(process.env.NODE_ENV) !== -1,
             token: config.get('GRAPHQL_TEST_TOKEN'),
-        }),
-    ])
+        }
+    },
+})
 
-    // run features "init" hook
-    for (const feature of features) {
-        if (feature.init) await feature.init()
-    }
+registerAction('◇ finish', {
+    action: '♦ boot',
+    handler: () => {
+        console.log('')
+        console.log('')
+        console.log('Boot Trace:')
+        console.log('=================')
+        console.log(traceHook()('compact')('cli').join('\n'))
+        console.log('')
+        console.log('')
+        // console.log(traceHook()('full')('json'))
+        // console.log(traceHook.getHooks('service/server/routes'))
+    },
+})
 
-    await postgresService.start({
-        maxAttempts: Number(config.get('PG_MAX_CONN_ATTEMPTS')),
-        attemptDelay: Number(config.get('PG_CONN_ATTEMPTS_DELAY')),
-        models: [],
-    })
-
-    // run features "start" hook
-    for (const feature of features) {
-        if (feature.start) await feature.start()
-    }
-
-    await serverService.start()
-
-    // run features "started" hook
-    for (const feature of features) {
-        if (feature.started) await feature.started()
-    }
-}
-
-export default boot
+export default createHookApp({
+    settings: { cwd: process.cwd() },
+    services,
+    features,
+})
