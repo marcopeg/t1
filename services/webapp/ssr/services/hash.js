@@ -14,6 +14,7 @@ export const init = async (settings = {}) => new Promise((resolve, reject) => {
         if (err) {
             reject(err)
         } else {
+            salt = result
             resolve(result)
         }
     })
@@ -30,7 +31,7 @@ export const compare = (input, hash) => new Promise((resolve, reject) => {
 })
 
 export const encode = input => new Promise((resolve, reject) => {
-    bcrypt.hash(String(input), salt, (err, hash) => {
+    bcrypt.hash(String(input), salt, null, (err, hash) => {
         if (err) {
             reject(err)
         } else {

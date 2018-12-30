@@ -10,6 +10,8 @@
 
 # production
 /build
+/build-src
+/build-ssr
 
 # misc
 .DS_Store
