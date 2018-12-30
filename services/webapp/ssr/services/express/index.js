@@ -51,14 +51,14 @@ export const start = (settings) => new Promise((resolve) => {
     })
 })
 
-export const register = ({ registerHook }) => {
-    registerHook('◇ init::services', {
+export const register = ({ registerAction }) => {
+    registerAction('◇ init::services', {
         action: '→ express',
         trace: __filename,
         handler: ({ express }) => init(express),
     })
 
-    registerHook('◇ start::services', {
+    registerAction('◇ start::services', {
         action: '→ express',
         trace: __filename,
         handler: ({ express }) => start(express),

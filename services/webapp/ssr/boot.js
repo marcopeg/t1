@@ -1,5 +1,5 @@
 import * as config from '@marcopeg/utils/lib/config'
-import { registerHook, traceHook, createHookApp } from '@marcopeg/hooks'
+import { registerAction, traceHook, createHookApp } from '@marcopeg/hooks'
 
 require('es6-promise').polyfill()
 require('isomorphic-fetch')
@@ -23,7 +23,7 @@ const features = [
     require('./features/fii'),
 ]
 
-registerHook('◇ settings', {
+registerAction('◇ settings', {
     action: '♦ boot',
     handler: ({ settings }) => {
         settings.hash = {
@@ -69,7 +69,7 @@ registerHook('◇ settings', {
     },
 })
 
-registerHook('◇ finish', {
+registerAction('◇ finish', {
     action: '♦ boot',
     handler: () => {
         console.log('')

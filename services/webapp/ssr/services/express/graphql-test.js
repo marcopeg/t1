@@ -82,14 +82,14 @@ export const initGraphql = async ({ queries, mutations }) => {
     }
 }
 
-export const register = ({ registerHook }) => {
-    registerHook('◇ init::services', {
+export const register = ({ registerAction }) => {
+    registerAction('◇ init::services', {
         action: '→ express/graphql-test',
         trace: __filename,
         handler: ({ graphqlTest }) => init(graphqlTest),
     })
 
-    registerHook('→ express/graphql', {
+    registerAction('→ express/graphql', {
         action: '→ express/graphql-test',
         trace: __filename,
         handler: initGraphql,

@@ -31,8 +31,8 @@ const initEnv = async (args) => {
     await loadEnv(`.env.${process.env.NODE_ENV}.local`, cwd)
 }
 
-export const register = ({ registerHook }) =>
-    registerHook('◇ start', {
+export const register = ({ registerAction }) =>
+    registerAction('◇ start', {
         action: '→ env',
         trace: __filename,
         handler: initEnv,

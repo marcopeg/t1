@@ -51,8 +51,8 @@ export const createGraphQLHandler = async () => {
     })(req, res)
 }
 
-export const register = ({ registerHook }) =>
-    registerHook('→ express/routes', {
+export const register = ({ registerAction }) =>
+    registerAction('→ express/routes', {
         action: '→ express/graphql',
         trace: __filename,
         handler: async ({ app, settings }) => {
