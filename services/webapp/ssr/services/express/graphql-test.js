@@ -5,7 +5,7 @@ import {
     GraphQLBoolean,
 } from 'graphql'
 
-import { createHook } from 'ssr/lib/hooks'
+import { createHook } from '@marcopeg/hooks'
 
 const settings = {}
 

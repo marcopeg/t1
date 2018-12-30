@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 import { GraphQLString } from 'graphql'
-import { traceHook, createHook } from 'ssr/lib/hooks'
+import { traceHook, createHook } from '@marcopeg/hooks'
 
 export const register = ({ registerHook }) => {
     registerHook('→ express/routes', {

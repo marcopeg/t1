@@ -1,5 +1,5 @@
 import * as config from '@marcopeg/utils/lib/config'
-import { registerHook, traceHook, createHookApp } from 'ssr/lib/hooks'
+import { registerHook, traceHook, createHookApp } from '@marcopeg/hooks'
 
 require('es6-promise').polyfill()
 require('isomorphic-fetch')
@@ -24,7 +24,7 @@ const features = [
 ]
 
 registerHook('◇ settings', {
-    action: '◇ settings',
+    action: '♦ boot',
     handler: ({ settings }) => {
         settings.hash = {
             rounds: Number(config.get('BCRYPT_ROUNDS')),
@@ -69,8 +69,8 @@ registerHook('◇ settings', {
     },
 })
 
-registerHook('◇ up', {
-    action: '◇ boot',
+registerHook('◇ finish', {
+    action: '♦ boot',
     handler: () => {
         console.log('')
         console.log('')

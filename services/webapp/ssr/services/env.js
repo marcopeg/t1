@@ -32,7 +32,7 @@ const initEnv = async (args) => {
 }
 
 export const register = ({ registerHook }) =>
-    registerHook('◇ boot', {
+    registerHook('◇ start', {
         action: '→ env',
         trace: __filename,
         handler: initEnv,
