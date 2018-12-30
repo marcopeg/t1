@@ -4,17 +4,16 @@ import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
 import { createHook, createHookContext } from '@marcopeg/hooks'
 import { logInfo } from 'ssr/services/logger'
-// import { cookieHelper } from './cookie-helper'
-// import { deviceId } from './device-id'
 
 const app = express()
-app.settings = {}
 
 export const init = async (settings) => {
     logInfo('[express] init...')
-    // const { loginDuration, port } = settings
 
-    // app.settings.port = port
+    app.use((req, res, next) => {
+        req.data = {}
+        next()
+    })
 
     // hook - enable a tracing context that is scoped
     // into the current request
@@ -52,13 +51,13 @@ export const start = (settings) => new Promise((resolve) => {
 })
 
 export const register = ({ registerAction }) => {
-    registerAction('◇ init::services', {
+    registerAction('◇ init::service', {
         action: '→ express',
         trace: __filename,
         handler: ({ express }) => init(express),
     })
 
-    registerAction('◇ start::services', {
+    registerAction('◇ start::service', {
         action: '→ express',
         trace: __filename,
         handler: ({ express }) => start(express),

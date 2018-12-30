@@ -21,6 +21,7 @@ const services = [
 const features = [
     require('./features/foo'),
     require('./features/fii'),
+    require('./features/auth'),
 ]
 
 registerAction('◇ settings', {
@@ -35,7 +36,9 @@ registerAction('◇ settings', {
             duration: String(config.get('JWT_DURATION')),
         }
 
-        settings.postgres = {
+        // list one or more connections
+        settings.postgres = [{
+            connectionName: 'default',
             host: config.get('PG_HOST'),
             port: config.get('PG_PORT'),
             database: config.get('PG_DATABASE'),
@@ -44,7 +47,7 @@ registerAction('◇ settings', {
             maxAttempts: Number(config.get('PG_MAX_CONN_ATTEMPTS')),
             attemptDelay: Number(config.get('PG_CONN_ATTEMPTS_DELAY')),
             models: [],
-        }
+        }]
 
         settings.express = {
             nodeEnv: config.get('NODE_ENV'),

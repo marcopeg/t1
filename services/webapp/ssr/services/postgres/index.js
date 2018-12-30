@@ -6,16 +6,28 @@ export { default as start } from './start'
 export { default as query } from './query'
 export { getModel, registerModel, resetModels } from './conn'
 
-export const register = ({ registerAction }) => {
-    registerAction('◇ init::services', {
+export const register = ({ registerAction, createHook }) => {
+    registerAction('◇ init::service', {
         action: '→ postgres',
         trace: __filename,
-        handler: ({ postgres }) => init(postgres),
+        handler: async ({ postgres }) => {
+            for (const options of postgres) {
+                const name = `→ postgres/beforeInit/${options.connectionName || 'default'}`
+                createHook(name, { args: { options } })
+                await init(options)
+            }
+        },
     })
 
-    registerAction('◇ start::services', {
+    registerAction('◇ start::service', {
         action: '→ postgres',
         trace: __filename,
-        handler: ({ postgres }) => start(postgres),
+        handler: async ({ postgres }) => {
+            for (const options of postgres) {
+                const name = `→ postgres/beforeStart/${options.connectionName || 'default'}`
+                createHook(name, { args: { options } })
+                await start(options)
+            }
+        },
     })
 }

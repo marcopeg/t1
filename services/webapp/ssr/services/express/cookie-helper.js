@@ -1,9 +1,9 @@
 import millisecond from 'millisecond'
 
-const isDev = [ 'development', 'test' ].indexOf(process.env.NODE_ENV) !== -1
-
 export const cookieHelper = ({ scope, duration }) =>
     (req, res, next) => {
+        const isDev = [ 'development', 'test' ].indexOf(process.env.NODE_ENV) !== -1
+
         const options = {
             httpOnly: true,
             secure: !isDev,
