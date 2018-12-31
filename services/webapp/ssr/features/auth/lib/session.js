@@ -10,8 +10,8 @@ export const getSession = async (req, res) => {
 
         req.data.session = {
             id: data.payload.id,
-            created: (new Date(data.iat * 1000)).toISOString(),
-            expiry: (new Date(data.exp * 1000)).toISOString(),
+            created: new Date(data.iat * 1000),
+            expiry: new Date(data.exp * 1000),
         }
 
         return req.data.session
@@ -34,8 +34,8 @@ export const validateSession = async (req, res) => {
 
         req.data.session = {
             id: newData.payload.id,
-            created: (new Date(newData.iat * 1000)).toISOString(),
-            expiry: (new Date(newData.exp * 1000)).toISOString(),
+            created: new Date(newData.iat * 1000),
+            expiry: new Date(newData.exp * 1000),
         }
 
         return req.data.session

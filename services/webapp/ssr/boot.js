@@ -19,8 +19,9 @@ const services = [
 ]
 
 const features = [
-    require('./features/foo'),
-    require('./features/fii'),
+    // require('./features/foo'),
+    // require('./features/fii'),
+    require('./features/tracker'),
     require('./features/auth'),
 ]
 

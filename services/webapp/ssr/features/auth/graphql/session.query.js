@@ -2,8 +2,9 @@ import {
     GraphQLNonNull,
     GraphQLObjectType,
     GraphQLID,
-    GraphQLString,
 } from 'graphql'
+
+import { GraphQLDateTime } from 'graphql-iso-date'
 
 import { createHook } from '@marcopeg/hooks'
 import { getSession } from '../lib/session'
@@ -14,10 +15,10 @@ export default async () => {
             type: new GraphQLNonNull(GraphQLID),
         },
         created: {
-            type: new GraphQLNonNull(GraphQLString),
+            type: new GraphQLNonNull(GraphQLDateTime),
         },
         expiry: {
-            type: new GraphQLNonNull(GraphQLString),
+            type: new GraphQLNonNull(GraphQLDateTime),
         },
     }
 
