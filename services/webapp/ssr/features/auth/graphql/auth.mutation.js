@@ -2,8 +2,9 @@ import {
     GraphQLNonNull,
     GraphQLObjectType,
     GraphQLID,
-    GraphQLString,
 } from 'graphql'
+
+import { GraphQLDateTime } from 'graphql-iso-date'
 
 import { validateSession } from '../lib/session'
 
@@ -16,10 +17,10 @@ export default {
                 type: new GraphQLNonNull(GraphQLID),
             },
             created: {
-                type: new GraphQLNonNull(GraphQLString),
+                type: new GraphQLNonNull(GraphQLDateTime),
             },
             expiry: {
-                type: new GraphQLNonNull(GraphQLString),
+                type: new GraphQLNonNull(GraphQLDateTime),
             },
         },
     }),
