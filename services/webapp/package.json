@@ -22,7 +22,10 @@
     "start:dev": "./node_modules/.bin/nodemon index.dev.js",
     "start:prod": "npm run clean:all && npm run build:all && npm run start:prod:api",
     "start:dev:api": "./node_modules/.bin/nodemon --watch ssr --watch build -e js index.dev.js",
-    "start:prod:api": "node index"
+    "start:prod:api": "node index",
+    "----- // STYLEGUIDE // -----": "",
+    "styleguide": "BABEL_ENV=development ./node_modules/.bin/styleguidist server",
+    "styleguide:build": "BABEL_ENV=development./node_modules/.bin/styleguidist build"
   },
   "proxy": "http://localhost:8080",
   "eslintConfig": {
@@ -67,6 +70,7 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-scripts-rewired": "2.1.1",
+    "react-styleguidist": "^8.0.6",
     "sequelize": "^4.42.0",
     "uuid": "^3.3.2"
   },

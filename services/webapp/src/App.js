@@ -1,7 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import { Switch, Route, Redirect } from 'react-router-dom'
-import { HomePage, LoginPage } from 'features/pages'
+import { HomePage, LoginPage, ErrorPage } from 'features/pages'
 import { AppMobile } from 'features/mobile'
 import './App.css'
 
@@ -16,8 +16,9 @@ export default () => (
         </Helmet>
         <Switch>
             <Route exact path="/" component={HomePage} />
-            <Route exact path="/app" component={renderApp} />
             <Route exact path="/login" component={LoginPage} />
+            <Route exact path="/error" component={ErrorPage} />
+            <Route exact path="/app" component={renderApp} />
             <Route path="/m" component={AppMobile} />
         </Switch>
     </React.Fragment>

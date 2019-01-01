@@ -11,6 +11,11 @@ export const LoginPage = loadable({
     loading: Loading,
 })
 
+export const ErrorPage = loadable({
+    loader: () => import(/* webpackChunkName: "ErrorPage" */ './screens/ErrorPage'),
+    loading: Loading,
+})
+
 export const HomePage = loadable({
     loader: () => import(/* webpackChunkName: "HomePage" */ './screens/HomePage'),
     loading: Loading,

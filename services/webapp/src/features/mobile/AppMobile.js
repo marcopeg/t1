@@ -1,13 +1,11 @@
-/* eslint-disable */
 // import loadable from 'react-loadable'
 
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
-// import ErrorScreen from './screens/ErrorScreen'
 import Dashboard from './screens/Dashboard'
-// import Login from './screens/Login'
 
 const mapState = ({ auth }) => auth
 
@@ -24,6 +22,10 @@ const AppMobile = ({ hasLogin }) =>
             </Switch>
         )
         : <Redirect to="/" />
+
+AppMobile.propTypes = {
+    hasLogin: PropTypes.bool.isRequired,
+}
 
 // Preload modules
 // Signup.preload()

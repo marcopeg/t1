@@ -25,17 +25,27 @@ export default {
         },
     },
     PageHeader: {
-        wrapper: {
-            // backgroundColor: colors.primary,
+        'wrapper--light': {
             color: colors.textPrimary,
         },
-        inner: {
+        'wrapper--dark': {
+            backgroundColor: colors.primary,
+            color: colors.text,
+        },
+        'inner--light': {
             borderBottomColor: colors.divider,
         },
     },
     PageFooter: {
-        wrapper: {
+        'wrapper--light': {
+            color: colors.textPrimary,
+        },
+        'wrapper--dark': {
             backgroundColor: colors.primary,
+            color: colors.text,
+        },
+        'inner--light': {
+            borderTopColor: colors.divider,
         },
     },
     Divider: {
