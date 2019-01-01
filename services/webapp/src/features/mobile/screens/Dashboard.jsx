@@ -39,9 +39,17 @@ const Dashboard = ({ doLogout, doConfirm }) => {
             </MobilePage.Header>
             <MobilePage.Body withPadding>
                 Dashboard
-                <Space />
-                <Button block type="secondary" onClick={handleLogout}>logout</Button>
             </MobilePage.Body>
+            <MobilePage.Footer withPadding>
+                <Button
+                    block
+                    type="secondary"
+                    size="small"
+                    onClick={handleLogout}
+                >
+                    logout
+                </Button>
+            </MobilePage.Footer>
         </MobilePage>
     )
 }

@@ -15,4 +15,8 @@ export default {
         borderBottomColor: 'transparent',
         fontWeight: 'bold',
     },
+    'wrapper--light': {},
+    'wrapper--dark': {},
+    'inner--light': {},
+    'inner--dark': {},
 }

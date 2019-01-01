@@ -41,7 +41,7 @@ const HomePage = ({ hasLogin }) => (
                     <Divider size="xs" style={{ marginBottom: 5 }} />
                     <Space />
                     {hasLogin ? (
-                        <Button linkTo={'/app'}>enter the app</Button>
+                        <Button linkTo={'/app'}>ENTER THE APP</Button>
                     ) : (
                         <React.Fragment>
                             <Button
