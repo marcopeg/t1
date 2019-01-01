@@ -5,6 +5,11 @@ const COOKIE_NAME = 'auth::login'
 
 export const getSession = async (req, res) => {
     try {
+        // handle multiple calls
+        if (req.data.session) {
+            return req.data.session
+        }
+
         const token = req.getAppCookie(COOKIE_NAME)
         const data = await jwtService.verify(token)
 

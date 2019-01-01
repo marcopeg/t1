@@ -106,7 +106,7 @@ const listByDay = (conn, Model) => (accountId, date, period) => {
     return Model.findAll({
         where,
         raw: true,
-        logging: console.log,
+        // logging: console.log,
     })
 }
 

@@ -1,21 +1,24 @@
-/* eslint react/prefer-stateless-function:off */
-
-import React, { Component } from 'react'
+import React from 'react'
 import { Helmet } from 'react-helmet'
-// import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
+import { HomePage, LoginPage } from 'features/pages'
+import { AppMobile } from 'features/mobile'
+import './App.css'
 
-class App extends Component {
-    render () {
-        return (
-            <div className="App">
-                <Helmet>
-                    <html lang="en" />
-                    <title>@marcopeg/react-ssr</title>
-                </Helmet>
-                foo
-            </div>
-        )
-    }
-}
+// Temporary solution to redirect to desktop or mobile view.
+const renderApp = () => <Redirect to="/m" />
 
-export default App
+export default () => (
+    <React.Fragment>
+        <Helmet>
+            <html lang="en" />
+            <title>{process.env.REACT_APP_NAME}</title>
+        </Helmet>
+        <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route exact path="/app" component={renderApp} />
+            <Route exact path="/login" component={LoginPage} />
+            <Route path="/m" component={AppMobile} />
+        </Switch>
+    </React.Fragment>
+)
