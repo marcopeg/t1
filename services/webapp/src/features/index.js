@@ -1,3 +1,5 @@
 export default [
-    // require('./splash'),
+    require('./auth'),
+    require('./pages'),
+    require('./mobile'),
 ]
