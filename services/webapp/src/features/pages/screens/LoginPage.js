@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { login } from 'features/auth/auth.service'
+import { login } from 'features/auth'
 
 import MobilePage, {
     Title,
@@ -61,6 +61,7 @@ const LoginPage = ({ hasLogin, doLogin, doConfirm }) => {
                         <Title style={{ marginBottom: 50 }}>{'.: Login'}</Title>
                         <Input
                             block
+                            autoFocus
                             placeholder={'your@email.com'}
                             value={uname}
                             onChange={e => {
@@ -72,7 +73,7 @@ const LoginPage = ({ hasLogin, doLogin, doConfirm }) => {
                         <Input
                             block
                             type="password"
-                            placeholder={'123456'}
+                            placeholder={'xxx'}
                             value={passw}
                             onChange={e => {
                                 setPassw(e.target.value)
