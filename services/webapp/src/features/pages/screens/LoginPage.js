@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { injectIntl, intlShape, defineMessages } from 'react-intl'
 import { login } from 'features/auth'
 
 import MobilePage, {
@@ -28,6 +29,21 @@ const styles = {
     },
 }
 
+const messages = defineMessages({
+    title: {
+        id: 'pages.LoginPage.title',
+        defaultMessage: '.: Login',
+    },
+    emailPlaceholder: {
+        id: 'pages.LoginPage.emailPlaceholder',
+        defaultMessage: 'you@email.com',
+    },
+    passwordPlaceholder: {
+        id: 'pages.LoginPage.passwordPlaceholder',
+        defaultMessage: 'type your password',
+    },
+})
+
 const mapState = ({ auth }) => ({
     hasLogin: auth.id !== null,
 })
@@ -37,7 +53,7 @@ const mapDispatch = (dispatch, { history }) => ({
     doConfirm: () => setTimeout(() => history.replace('/app')),
 })
 
-const LoginPage = ({ hasLogin, doLogin, doConfirm }) => {
+const LoginPage = ({ hasLogin, doLogin, doConfirm, intl }) => {
     const [ uname, setUname ] = useState('')
     const [ passw, setPassw ] = useState('')
     const [ status, setStatus ] = useState(null)
@@ -58,11 +74,11 @@ const LoginPage = ({ hasLogin, doLogin, doConfirm }) => {
             <MobilePage.Body noScroll withPadding flex>
                 <div style={styles.wrapper}>
                     <div style={styles.inner}>
-                        <Title style={{ marginBottom: 50 }}>{'.: Login'}</Title>
+                        <Title style={{ marginBottom: 50 }}>{intl.formatMessage(messages.title)}</Title>
                         <Input
                             block
                             autoFocus
-                            placeholder={'your@email.com'}
+                            placeholder={intl.formatMessage(messages.emailPlaceholder)}
                             value={uname}
                             onChange={e => {
                                 setUname(e.target.value.toLowerCase())
@@ -73,7 +89,7 @@ const LoginPage = ({ hasLogin, doLogin, doConfirm }) => {
                         <Input
                             block
                             type="password"
-                            placeholder={'xxx'}
+                            placeholder={intl.formatMessage(messages.passwordPlaceholder)}
                             value={passw}
                             onChange={e => {
                                 setPassw(e.target.value)
@@ -118,12 +134,13 @@ const LoginPage = ({ hasLogin, doLogin, doConfirm }) => {
 }
 
 LoginPage.propTypes = {
+    intl: intlShape.isRequired,
     hasLogin: PropTypes.bool.isRequired,
     doLogin: PropTypes.func.isRequired,
     doConfirm: PropTypes.func.isRequired,
 }
 
-export default connect(mapState, mapDispatch)(LoginPage)
+export default injectIntl(connect(mapState, mapDispatch)(LoginPage))
 
 /* eslint-disable */
 import { AppMobile } from 'features/mobile'

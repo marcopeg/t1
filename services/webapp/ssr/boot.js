@@ -21,6 +21,7 @@ const services = [
 const features = [
     // require('./features/foo'),
     // require('./features/fii'),
+    require('./features/locale'),
     require('./features/tracker'),
     require('./features/auth'),
 ]
@@ -83,7 +84,7 @@ registerAction('◇ finish', {
         console.log(traceHook()('compact')('cli').join('\n'))
         console.log('')
         console.log('')
-        // console.log(traceHook()('full')('json'))
+        // console.log(JSON.stringify(traceHook()('full')('json')))
         // console.log(traceHook.getHooks('service/server/routes'))
     },
 })
