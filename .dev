@@ -6,14 +6,10 @@
 # you must create a `.env.local` file and consider this one as a template.
 #
 
-NODE_PATH=src
-
 # NODE_ENV=development
 # BABEL_ENV=node 
 # LOG_LEVEL=verbose
 
-# PG_HOST=localhost
-# PG_PORT=5432
 # PG_DATABASE=postgres
 # PG_USERNAME=postgres
 # PG_PASSWORD=postgres

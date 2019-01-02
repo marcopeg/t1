@@ -25,8 +25,9 @@ services:
         ports:
             - ${SERVER_PORT}:8080
         environment:
-            NODE_ENV: production
-            LOG_LEVEL: error
+            NODE_ENV: ${NODE_ENV}
+            BABEL_ENV: ${BABEL_ENV}
+            LOG_LEVEL: ${LOG_LEVEL}
             PG_HOST: postgres
             PG_PORT: 5432
             PG_DATABASE: ${PG_DATABASE}
@@ -40,6 +41,9 @@ services:
             JWT_DURATION: ${JWT_DURATION}
             LOGIN_DURATION: ${LOGIN_DURATION}
             GRAPHQL_TEST_TOKEN: ${GRAPHQL_TEST_TOKEN}
+            GRAPHQL_MOUNT_POINT: ${GRAPHQL_MOUNT_POINT}
+            REACT_APP_NAME: ${REACT_APP_NAME}
+            REACT_SSR: ${REACT_SSR}
             REACT_APP_SSR_USE_CACHE: ${REACT_APP_SSR_USE_CACHE}
         restart: always
 
