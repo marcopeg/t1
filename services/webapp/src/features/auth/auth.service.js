@@ -1,6 +1,7 @@
 import { runQuery } from 'lib/http'
 import localStorage from 'lib/local-storage'
 import loginMutation from './queries/login.mutation'
+import logoutMutation from './queries/logout.mutation'
 import { setLogin } from './reducers/auth.reducer'
 
 // removes all the current session informations
@@ -34,7 +35,21 @@ export const login = (uname, passw) => async (dispatch) => {
     }
 }
 
-export const logout = () => (dispatch) => dispatch(cleanSession())
+export const logout = () => async (dispatch) => {
+    try {
+        await dispatch(runQuery(logoutMutation))
+        dispatch(cleanSession())
+
+        return {
+            success: 'true',
+        }
+    } catch (err) {
+        return {
+            success: false,
+            errorMsg: err.message,
+        }
+    }
+}
 
 // restore session from localStorage
 export const start = () => (dispatch, getState) => {

@@ -3,7 +3,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import MobilePage, { Button, Space, Divider, Title, Text, mixins } from 'components/MobilePage'
-import { logout } from 'features/auth/auth.service'
+import { logout } from 'features/auth'
 
 const styles = {
     wrapper: {

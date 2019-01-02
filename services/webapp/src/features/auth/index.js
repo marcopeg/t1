@@ -9,3 +9,5 @@ export const services = [
 export const listeners = [
     require('./auth.listener').default,
 ]
+
+export { login, logout } from './auth.service'
