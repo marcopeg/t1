@@ -4,6 +4,7 @@ import { createSSRRender } from '@marcopeg/react-ssr/lib/create-ssr-render'
 import { StaticRouter } from 'react-router-dom'
 import { createState } from './lib/state'
 import App from './App'
+import './lib/locale'
 
 const Root = ({ store, location, context, ...props }) => (
     <Provider store={store}>

@@ -1,0 +1,22 @@
+[
+  {
+    "id": "pages.HomePage.title",
+    "defaultMessage": "AppTitle"
+  },
+  {
+    "id": "pages.HomePage.subtitle",
+    "defaultMessage": "keep your stuff together"
+  },
+  {
+    "id": "pages.HomePage.login",
+    "defaultMessage": "login"
+  },
+  {
+    "id": "pages.HomePage.signup",
+    "defaultMessage": "SIGNUP"
+  },
+  {
+    "id": "pages.HomePage.enter",
+    "defaultMessage": "ENTER THE APP"
+  }
+]

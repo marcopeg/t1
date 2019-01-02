@@ -31,7 +31,7 @@ export const postJSON = async (url, data = {}, receivedOptions = {}) => {
 
         return await res.json()
     } catch (err) {
-        console.log('@ERROR: lib/http/postJSON', err.message)
+        // console.log('@ERROR: lib/http/postJSON', err.message)
         throw err
     }
 }
@@ -60,7 +60,6 @@ export const runQuery = (query = null, variables = {}, options = {}) =>
                 Cookie: req.headers.cookie,
             }
         }
-
 
         if (debug) {
             console.log('>>>>>>>>>>>> GRAPHQL')

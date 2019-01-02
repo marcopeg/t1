@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import createHistory from 'history/createBrowserHistory'
 import { createState } from 'lib/state'
+import './lib/locale'
 
 const boot = props => {
     const renderApp = () => {

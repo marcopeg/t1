@@ -1,0 +1,14 @@
+[
+  {
+    "id": "pages.LoginPage.title",
+    "defaultMessage": ".: Login"
+  },
+  {
+    "id": "pages.LoginPage.emailPlaceholder",
+    "defaultMessage": "you@email.com"
+  },
+  {
+    "id": "pages.LoginPage.passwordPlaceholder",
+    "defaultMessage": "type your password"
+  }
+]
