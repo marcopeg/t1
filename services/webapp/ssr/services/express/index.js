@@ -3,7 +3,9 @@ import compression from 'compression'
 import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
 import { createHook, createHookContext } from '@marcopeg/hooks'
+import { INIT_SERVICE, START_SERVICE } from '@marcopeg/hooks'
 import { logInfo } from 'ssr/services/logger'
+import { EXPRESS_MIDDLEWARE, EXPRESS_ROUTE, EXPRESS_HANDLER } from './hooks'
 
 const app = express()
 
@@ -26,17 +28,17 @@ export const init = async (settings) => {
     // COOKIES
     app.use(cookieParser())
 
-    await createHook('→ express/middlewares', {
+    await createHook(EXPRESS_MIDDLEWARE, {
         async: 'serie',
         args: { app, settings: { ...settings } },
     })
 
-    await createHook('→ express/routes', {
+    await createHook(EXPRESS_ROUTE, {
         async: 'serie',
         args: { app, settings: { ...settings } },
     })
 
-    await createHook('→ express/handlers', {
+    await createHook(EXPRESS_HANDLER, {
         async: 'serie',
         args: { app, settings: { ...settings } },
     })
@@ -51,15 +53,16 @@ export const start = (settings) => new Promise((resolve) => {
 })
 
 export const register = ({ registerAction }) => {
-    registerAction('◇ init::service', {
+    registerAction(INIT_SERVICE, {
         action: '→ express',
         trace: __filename,
         handler: ({ express }) => init(express),
     })
 
-    registerAction('◇ start::service', {
+    registerAction(START_SERVICE, {
         action: '→ express',
         trace: __filename,
         handler: ({ express }) => start(express),
     })
 }
+

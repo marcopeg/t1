@@ -6,6 +6,8 @@ import {
 } from 'graphql'
 
 import { createHook } from '@marcopeg/hooks'
+import { INIT_SERVICE } from '@marcopeg/hooks'
+import { EXPRESS_GRAPHQL, EXPRESS_GRAPHQL_TEST } from './hooks'
 
 const settings = {}
 
@@ -51,7 +53,7 @@ export const initGraphql = async ({ queries, mutations }) => {
         },
     }
 
-    await createHook('→ express/graphql-test', {
+    await createHook(EXPRESS_GRAPHQL_TEST, {
         async: 'serie',
         args: {
             queries: testQueries,
@@ -83,14 +85,14 @@ export const initGraphql = async ({ queries, mutations }) => {
 }
 
 export const register = ({ registerAction }) => {
-    registerAction('◇ init::service', {
-        action: '→ express/graphql-test',
+    registerAction(INIT_SERVICE, {
+        action: EXPRESS_GRAPHQL_TEST,
         trace: __filename,
         handler: ({ graphqlTest }) => init(graphqlTest),
     })
 
-    registerAction('→ express/graphql', {
-        action: '→ express/graphql-test',
+    registerAction(EXPRESS_GRAPHQL, {
+        action: EXPRESS_GRAPHQL_TEST,
         trace: __filename,
         handler: initGraphql,
     })

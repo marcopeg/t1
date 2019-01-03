@@ -4,7 +4,7 @@
 
 // @TODO: how does this work in the backend?
 
-const getKeyName = key => `${process.env.REACT_APP_NAME}::${key}`
+const getKeyName = key => `${process.env.REACT_APP_NAME || 'app'}::${key}`
 
 export const setItem = (key, value) =>
     localStorage.setItem(getKeyName(key), JSON.stringify(value))

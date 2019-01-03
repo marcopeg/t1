@@ -1,5 +1,11 @@
 import * as config from '@marcopeg/utils/lib/config'
-import { registerAction, traceHook, createHookApp } from '@marcopeg/hooks'
+import {
+    registerAction,
+    traceHook,
+    createHookApp,
+    SETTINGS,
+    FINISH,
+} from '@marcopeg/hooks'
 
 require('es6-promise').polyfill()
 require('isomorphic-fetch')
@@ -26,7 +32,7 @@ const features = [
     require('./features/auth'),
 ]
 
-registerAction('◇ settings', {
+registerAction(SETTINGS, {
     action: '♦ boot',
     handler: ({ settings }) => {
         settings.hash = {
@@ -65,6 +71,14 @@ registerAction('◇ settings', {
             graphql: {
                 mountPoint: config.get('GRAPHQL_MOUNT_POINT'),
             },
+            reactSSR: {
+                initialState: {
+                    app: {
+                        scope: 'trackp',
+                        name: 'TrackApp***',
+                    },
+                },
+            },
         }
 
         settings.graphqlTest = {
@@ -74,7 +88,7 @@ registerAction('◇ settings', {
     },
 })
 
-registerAction('◇ finish', {
+registerAction(FINISH, {
     action: '♦ boot',
     handler: () => {
         console.log('')

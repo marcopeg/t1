@@ -15,6 +15,9 @@
 
 FROM node:10.14-alpine AS builder
 
+# Pass arguments down to the webpack builder to substitute variables
+ARG REACT_APP_NAME
+
 # NPM Install for building
 WORKDIR /usr/src/app-build
 ADD package.json /usr/src/app-build/package.json
@@ -45,9 +48,7 @@ WORKDIR /usr/src/app-build
 ADD src /usr/src/app-build/src
 RUN npm run build:src
 ADD public /usr/src/app-build/public
-RUN ./node_modules/.bin/react-scripts build
-
-
+RUN npm run build
 
 
 #
@@ -73,7 +74,7 @@ ADD index.js /usr/src/app
 
 # Default environment configuration:
 EXPOSE 8080
-ENV NODE_ENV=production
-ENV REACT_SSR=true
+#ENV NODE_ENV=production
+#ENV REACT_SSR=true
 
 CMD node index.js

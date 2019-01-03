@@ -34,7 +34,7 @@ Create `.env.local` to run the solution with Docker:
     JWT_DURATION=30d
     LOGIN_DURATION=30d
     GRAPHQL_TEST_TOKEN=12345
-    REACT_APP_SSR_USE_CACHE=no
+    REACT_SSR_USE_CACHE=no
 
 Then you can run:
 

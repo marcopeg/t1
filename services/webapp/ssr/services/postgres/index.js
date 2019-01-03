@@ -1,3 +1,5 @@
+import { INIT_SERVICE, START_SERVICE } from '@marcopeg/hooks'
+import { POSTGRES_BEFORE_INIT, POSTGRES_BEFORE_START } from './hooks'
 import { default as init } from './init'
 import { default as start } from './start'
 
@@ -7,24 +9,24 @@ export { default as query } from './query'
 export { getModel, registerModel, resetModels } from './conn'
 
 export const register = ({ registerAction, createHook }) => {
-    registerAction('◇ init::service', {
+    registerAction(INIT_SERVICE, {
         action: '→ postgres',
         trace: __filename,
         handler: async ({ postgres }) => {
             for (const options of postgres) {
-                const name = `→ postgres/beforeInit/${options.connectionName || 'default'}`
+                const name = `${POSTGRES_BEFORE_INIT}/${options.connectionName || 'default'}`
                 createHook(name, { args: { options } })
                 await init(options)
             }
         },
     })
 
-    registerAction('◇ start::service', {
+    registerAction(START_SERVICE, {
         action: '→ postgres',
         trace: __filename,
         handler: async ({ postgres }) => {
             for (const options of postgres) {
-                const name = `→ postgres/beforeStart/${options.connectionName || 'default'}`
+                const name = `${POSTGRES_BEFORE_START}/${options.connectionName || 'default'}`
                 createHook(name, { args: { options } })
                 await start(options)
             }

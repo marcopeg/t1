@@ -6,7 +6,9 @@
  * open to further development using a better method
  */
 
+import { INIT_SERVICES, SERVICE } from '@marcopeg/hooks'
 import bcrypt from 'bcrypt-nodejs'
+
 let salt = null
 
 export const init = async (settings = {}) => new Promise((resolve, reject) => {
@@ -41,8 +43,8 @@ export const encode = input => new Promise((resolve, reject) => {
 })
 
 export const register = ({ registerAction }) =>
-    registerAction('◇ init::services', {
-        action: '→ hash',
+    registerAction(INIT_SERVICES, {
+        action: `${SERVICE} hash`,
         trace: __filename,
         handler: ({ hash }) => init(hash),
     })

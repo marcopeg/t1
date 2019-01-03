@@ -19,14 +19,16 @@ const styles = {
     },
 }
 
-const mapState = () => ({})
+const mapState = ({ app }) => ({
+    title: app.name,
+})
 
 const mapDispatch = (dispatch, { history }) => ({
     doLogout: () => dispatch(logout()),
     doConfirm: () => setTimeout(() => history.replace('/')),
 })
 
-const Dashboard = ({ doLogout, doConfirm }) => {
+const Dashboard = ({ title, doLogout, doConfirm }) => {
     const handleLogout = async () => {
         await doLogout()
         doConfirm()
@@ -35,7 +37,7 @@ const Dashboard = ({ doLogout, doConfirm }) => {
     return (
         <MobilePage>
             <MobilePage.Header>
-                {process.env.REACT_APP_NAME}
+                {title}
             </MobilePage.Header>
             <MobilePage.Body withPadding>
                 Dashboard

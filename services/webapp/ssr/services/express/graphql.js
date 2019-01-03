@@ -2,6 +2,7 @@ import { GraphQLSchema, GraphQLObjectType, GraphQLString } from 'graphql'
 import expressGraphql from 'express-graphql'
 import { createHook } from '@marcopeg/hooks'
 import ssr from '../../../package.json'
+import { EXPRESS_ROUTE, EXPRESS_GRAPHQL } from './hooks'
 
 const info = {
     description: 'Provides info regarding the project',
@@ -19,7 +20,7 @@ export const createGraphQLHandler = async () => {
         graphiql: isDev,
     }
 
-    await createHook('→ express/graphql', {
+    await createHook(EXPRESS_GRAPHQL, {
         async: 'serie',
         args: {
             queries,
@@ -52,8 +53,8 @@ export const createGraphQLHandler = async () => {
 }
 
 export const register = ({ registerAction }) =>
-    registerAction('→ express/routes', {
-        action: '→ express/graphql',
+    registerAction(EXPRESS_ROUTE, {
+        action: EXPRESS_GRAPHQL,
         trace: __filename,
         handler: async ({ app, settings }) => {
             const { mountPoint } = settings.graphql

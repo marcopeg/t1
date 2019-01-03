@@ -1,6 +1,7 @@
 import { getModel } from 'ssr/services/postgres'
 import jwtService from 'ssr/services/jwt'
 import { createHook } from '@marcopeg/hooks'
+import { AUTH_AFTER_LOGIN, AUTH_BEFORE_LOGOUT } from '../hooks'
 
 const COOKIE_NAME = 'auth::login'
 
@@ -25,7 +26,7 @@ export const login = async (req, res, uname, passw) => {
         token,
     }
 
-    await createHook(`▶ auth/afterLogin`, {
+    await createHook(AUTH_AFTER_LOGIN, {
         async: 'serie',
         ctx: req.hookCtx,
         args: { ...info, req, res },
@@ -35,7 +36,7 @@ export const login = async (req, res, uname, passw) => {
 }
 
 export const logout = async (req, res) => {
-    await createHook(`▶ auth/beforeLogout`, {
+    await createHook(AUTH_BEFORE_LOGOUT, {
         async: 'serie',
         ctx: req.hookCtx,
         args: { req, res },

@@ -7,7 +7,7 @@
  * .env.[development|production|...].local
  *
  */
-
+import { START, SERVICE } from '@marcopeg/hooks'
 import path from 'path'
 import fs from 'fs'
 import nodeEnvFile from 'node-env-file'
@@ -32,8 +32,8 @@ const initEnv = async (args) => {
 }
 
 export const register = ({ registerAction }) =>
-    registerAction('◇ start', {
-        action: '→ env',
+    registerAction(START, {
+        action: `${SERVICE} env`,
         trace: __filename,
         handler: initEnv,
     })

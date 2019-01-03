@@ -1,4 +1,4 @@
-
+import { INIT_SERVICES, SERVICE } from '@marcopeg/hooks'
 import jwt from 'jsonwebtoken'
 
 let secret = null
@@ -37,8 +37,8 @@ export const verify = (token, customSecret = secret) =>
     })
 
 export const register = ({ registerAction }) =>
-    registerAction('◇ init::services', {
-        action: '→ jwt',
+    registerAction(INIT_SERVICES, {
+        action: `${SERVICE} jwt`,
         trace: __filename,
         handler: ({ jwt }) => init(jwt),
     })
