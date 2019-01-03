@@ -1,4 +1,5 @@
 import millisecond from 'millisecond'
+import { EXPRESS_MIDDLEWARE } from './hooks'
 
 export const cookieHelper = ({ scope, duration }) =>
     (req, res, next) => {
@@ -28,7 +29,7 @@ export const cookieHelper = ({ scope, duration }) =>
     }
 
 export const register = ({ registerAction }) =>
-    registerAction('→ express/middlewares', {
+    registerAction(EXPRESS_MIDDLEWARE, {
         action: '→ express/cookie-helper',
         trace: __filename,
         handler: async ({ app, settings }) =>

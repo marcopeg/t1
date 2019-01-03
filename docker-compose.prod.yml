@@ -18,6 +18,8 @@ services:
         build:
             context: ./services/webapp
             dockerfile: Dockerfile
+            args:
+                REACT_APP_NAME: ${REACT_APP_NAME}
         depends_on:
             - postgres
         networks:
@@ -25,9 +27,10 @@ services:
         ports:
             - ${SERVER_PORT}:8080
         environment:
-            NODE_ENV: ${NODE_ENV}
-            BABEL_ENV: ${BABEL_ENV}
-            LOG_LEVEL: ${LOG_LEVEL}
+            NODE_ENV: production
+            BABEL_ENV: node
+            LOG_LEVEL: ${LOG_LEVEL:-error}
+            REACT_SSR: ${REACT_SSR:-yes}
             PG_HOST: postgres
             PG_PORT: 5432
             PG_DATABASE: ${PG_DATABASE}
@@ -43,8 +46,7 @@ services:
             GRAPHQL_TEST_TOKEN: ${GRAPHQL_TEST_TOKEN}
             GRAPHQL_MOUNT_POINT: ${GRAPHQL_MOUNT_POINT}
             REACT_APP_NAME: ${REACT_APP_NAME}
-            REACT_SSR: ${REACT_SSR}
-            REACT_APP_SSR_USE_CACHE: ${REACT_APP_SSR_USE_CACHE}
+            REACT_SSR_USE_CACHE: ${REACT_SSR_USE_CACHE}
         restart: always
 
 networks:

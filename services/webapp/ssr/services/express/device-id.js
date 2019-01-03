@@ -1,4 +1,5 @@
 import uuid from 'uuid/v1'
+import { EXPRESS_MIDDLEWARE } from './hooks'
 
 export const deviceId = ({ scope, header }) => {
     if (!scope) throw new Error('[deviceId] you must provide a value for "scope"')
@@ -12,7 +13,7 @@ export const deviceId = ({ scope, header }) => {
 }
 
 export const register = ({ registerAction }) =>
-    registerAction('→ express/middlewares', {
+    registerAction(EXPRESS_MIDDLEWARE, {
         action: '→ express/device-id',
         trace: __filename,
         handler: ({ app, settings }) => app.use(deviceId(settings.deviceId)),

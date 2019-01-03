@@ -834,13 +834,13 @@
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
 
-"@marcopeg/hooks@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@marcopeg/hooks/-/hooks-0.0.1.tgz#93a0fe8f9d6427ca54aed273a71ca63a52a5cfdc"
+"@marcopeg/hooks@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@marcopeg/hooks/-/hooks-0.0.2.tgz#bcc29c2b275374b171f331737e40667ca355db0c"
 
-"@marcopeg/react-ssr@0.0.18":
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/@marcopeg/react-ssr/-/react-ssr-0.0.18.tgz#e0e428a3330ac1cf8578be01d2d5918a6a8739de"
+"@marcopeg/react-ssr@0.0.19":
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/@marcopeg/react-ssr/-/react-ssr-0.0.19.tgz#17cd7e06eaf1ae02802759c8ed215c3ed609bcf0"
   dependencies:
     express "^4.16.4"
     history "^4.7.2"

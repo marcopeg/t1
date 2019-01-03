@@ -10,6 +10,7 @@ import { GraphQLDateTime } from 'graphql-iso-date'
 import { createHook } from '@marcopeg/hooks'
 import { getSession } from '../lib/session'
 import { logout } from '../lib/login'
+import { AUTH_SESSION_MUTATION } from '../hooks'
 
 export default async () => {
     const fields = {
@@ -29,7 +30,7 @@ export default async () => {
         },
     }
 
-    await createHook('▶ auth/session/mutation', {
+    await createHook(AUTH_SESSION_MUTATION, {
         async: 'serie',
         args: { fields },
     })

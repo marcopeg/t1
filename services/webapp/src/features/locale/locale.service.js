@@ -7,7 +7,10 @@ import localeQuery from './locale.query'
 import { addLocale, setLocale } from './locale.reducer'
 
 // @TODO: cookie namespace should come as a setting
-const getCookieName = () => () => `locale`
+const getCookieName = () => (dispatch, getState) => {
+    const { app } = getState()
+    return `${app.scope}-locale`
+}
 
 // @TODO: cache life should come as setting
 const isCacheValid = ctime => () =>
@@ -22,6 +25,19 @@ const localeExists = (desiredLocale) => (dispatch, getState) => {
     }
 
     return dispatch(isCacheValid(current.ctime))
+}
+
+const getCurrentLocale = () => (dispatch, getState) => {
+    const { ssr, locale } = getState()
+    const cookieName = dispatch(getCookieName())
+
+    if (ssr.isClient()) {
+        return Cookie.get(cookieName) || locale.current
+    }
+
+    if (ssr.isServer()) {
+        return ssr.getRequestHandler().cookies[cookieName] || locale.current
+    }
 }
 
 const setCurrentLocale = (locale) => (dispatch, getState) => {
@@ -50,19 +66,6 @@ const addLocaleData = (locale) => (dispatch, getState) => {
             ...locale,
             ctime,
         })
-    }
-}
-
-const getCurrentLocale = () => (dispatch, getState) => {
-    const { ssr, locale } = getState()
-    const cookieName = dispatch(getCookieName())
-
-    if (ssr.isClient()) {
-        return Cookie.get(cookieName) || locale.current
-    }
-
-    if (ssr.isServer()) {
-        return ssr.getRequestHandler().cookies[cookieName] || locale.current
     }
 }
 
@@ -125,6 +128,5 @@ export const init = () => (dispatch) => {
 export const start = () => (dispatch, getState) => {
     const { ssr } = getState()
     const current = dispatch(getCurrentLocale())
-    console.log('start, set current', current)
     return ssr.await(dispatch(loadLocale(current)))
 }

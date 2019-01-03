@@ -18,7 +18,7 @@ const AppMobile = ({ hasLogin }) =>
     hasLogin
         ? (
             <Switch>
-                <Route exact path={'/m'} component={Dashboard} />
+                <Route path={'/m'} component={Dashboard} />
             </Switch>
         )
         : <Redirect to="/" />

@@ -45,8 +45,8 @@ services:
             GRAPHQL_MOUNT_POINT: ${GRAPHQL_MOUNT_POINT:-/api}
             GRAPHQL_TEST_TOKEN: ${GRAPHQL_TEST_TOKEN:-12345}
             REACT_SSR: ${REACT_SSR:-yes}
-            REACT_APP_SSR_USE_CACHE: ${REACT_APP_SSR_USE_CACHE:-no}
-            REACT_APP_SSR_USE_CACHE: ${REACT_APP_SSR_USE_CACHE:-no}
+            REACT_SSR_USE_CACHE: ${REACT_SSR_USE_CACHE:-no}
+            REACT_SSR_USE_CACHE: ${REACT_SSR_USE_CACHE:-no}
         volumes:
             - ./services/webapp/ssr:/usr/src/app/ssr
             - ./services/webapp/src:/usr/src/app/src

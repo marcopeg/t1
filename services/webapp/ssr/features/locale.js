@@ -9,6 +9,8 @@ import {
 
 import GraphQLJSON from 'graphql-type-json'
 
+import { EXPRESS_GRAPHQL } from 'ssr/services/express/hooks'
+
 const loadMessages = (locale) => new Promise((resolve, reject) => {
     const filePath = path.join(process.cwd(), 'build', 'locale', `${locale}.json`)
     fs.readFile(filePath, 'utf8', (err, data) => {
@@ -49,7 +51,7 @@ const localeQuery = {
 }
 
 export const register = ({ registerAction }) => {
-    registerAction('→ express/graphql', {
+    registerAction(EXPRESS_GRAPHQL, {
         action: '▶ locale',
         handler: ({ queries }) => {
             queries.locale = localeQuery

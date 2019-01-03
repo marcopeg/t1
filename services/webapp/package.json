@@ -40,8 +40,8 @@
   ],
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
-    "@marcopeg/hooks": "^0.0.1",
-    "@marcopeg/react-ssr": "0.0.18",
+    "@marcopeg/hooks": "^0.0.2",
+    "@marcopeg/react-ssr": "0.0.19",
     "@marcopeg/utils": "^1.12.0",
     "antd-mobile": "^2.2.8",
     "bcrypt-nodejs": "^0.0.3",
