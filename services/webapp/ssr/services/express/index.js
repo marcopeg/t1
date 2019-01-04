@@ -1,6 +1,5 @@
 import express from 'express'
 import compression from 'compression'
-import cookieParser from 'cookie-parser'
 import helmet from 'helmet'
 import { createHook, createHookContext } from '@marcopeg/hooks'
 import { INIT_SERVICE, START_SERVICE } from '@marcopeg/hooks'
@@ -12,21 +11,18 @@ const app = express()
 export const init = async (settings) => {
     logInfo('[express] init...')
 
-    app.use((req, res, next) => {
-        req.data = {}
-        next()
-    })
-
     // hook - enable a tracing context that is scoped
     // into the current request
-    app.use(createHookContext())
+    app.use(createHookContext(settings.hooks || {}))
 
     // Basics
     app.use(compression())
     app.use(helmet())
 
-    // COOKIES
-    app.use(cookieParser())
+    app.use((req, res, next) => {
+        req.data = {}
+        next()
+    })
 
     await createHook(EXPRESS_MIDDLEWARE, {
         async: 'serie',

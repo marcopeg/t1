@@ -28,8 +28,9 @@ export const login = async (req, res, uname, passw) => {
 
     await createHook(AUTH_AFTER_LOGIN, {
         async: 'serie',
-        ctx: req.hookCtx,
+        ctx: req.hooks.ctx,
         args: { ...info, req, res },
+        // logTrace: console.log,
     })
 
     return info
@@ -38,7 +39,7 @@ export const login = async (req, res, uname, passw) => {
 export const logout = async (req, res) => {
     await createHook(AUTH_BEFORE_LOGOUT, {
         async: 'serie',
-        ctx: req.hookCtx,
+        ctx: req.hooks.ctx,
         args: { req, res },
     })
 
