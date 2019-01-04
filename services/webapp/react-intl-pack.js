@@ -5,7 +5,7 @@ import * as fs from 'fs';
 import { sync as globSync } from 'glob';
 import { sync as mkdirpSync } from 'mkdirp';
 
-const MESSAGES_PATTERN = './build-locale_/messages/**/*.json';
+const MESSAGES_PATTERN = './build-locale/messages/**/*.json';
 const LANG_DIR         = './build/locale/';
 
 const ESCAPED_CHARS = {

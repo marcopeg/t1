@@ -838,9 +838,9 @@
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@marcopeg/hooks/-/hooks-0.1.0.tgz#fdf4112f2a838c4b6bbbfe4517f10eda78832cd3"
 
-"@marcopeg/react-ssr@0.0.19":
-  version "0.0.19"
-  resolved "https://registry.yarnpkg.com/@marcopeg/react-ssr/-/react-ssr-0.0.19.tgz#17cd7e06eaf1ae02802759c8ed215c3ed609bcf0"
+"@marcopeg/react-ssr@0.0.20":
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/@marcopeg/react-ssr/-/react-ssr-0.0.20.tgz#b262cd669e0b04f74d648d47d6f9fd2a1677693d"
   dependencies:
     express "^4.16.4"
     history "^4.7.2"

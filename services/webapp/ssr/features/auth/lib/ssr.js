@@ -7,8 +7,10 @@ export const shouldRender = async (req, res) => {
 
 export const getCacheKey = async (req, res) => {
     const session = await getSession(req, res)
-    return {
-        session,
-        value: `${req.url}-${session.id}`,
-    }
+    return session
+        ? {
+            session,
+            value: `${session.id}@${req.url}`,
+        }
+        : req.url
 }
