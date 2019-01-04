@@ -14,7 +14,7 @@
     "clean:build:ssr": "rm -rf ./build-ssr",
     "clean:all": "npm run clean:build:app && npm run clean:build:src && npm run clean:build:ssr",
     "----- // SSR BUILD // -----": "",
-    "build:locale": "NODE_ENV=development BABEL_ENV=node ./node_modules/.bin/babel src --out-dir ./build-locale_ && ./node_modules/.bin/babel react-intl-pack.js | node && rm -r ./build-locale_",
+    "build:locale": "NODE_ENV=development BABEL_ENV=node ./node_modules/.bin/babel src --out-dir ./build-locale && ./node_modules/.bin/babel react-intl-pack.js | node",
     "build:src": "NODE_ENV=production BABEL_ENV=node ./node_modules/.bin/babel src --out-dir ./build-src --copy-files",
     "build:ssr": "NODE_ENV=production BABEL_ENV=node ./node_modules/.bin/babel ssr --out-dir ./build-ssr",
     "build:node": "npm run build:src && npm run build:ssr",
@@ -41,7 +41,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "@marcopeg/hooks": "^0.1.0",
-    "@marcopeg/react-ssr": "0.0.19",
+    "@marcopeg/react-ssr": "0.0.20",
     "@marcopeg/utils": "^1.12.0",
     "antd-mobile": "^2.2.8",
     "bcrypt-nodejs": "^0.0.3",
