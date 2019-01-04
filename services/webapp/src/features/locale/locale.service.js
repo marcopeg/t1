@@ -1,20 +1,14 @@
-/* eslint-disable */
-
-import Cookie from 'js-cookie'
 import { runQuery } from 'lib/http'
-import localStorage from 'lib/local-storage'
+import { cookie, localStorage } from 'features/storage'
 import localeQuery from './locale.query'
 import { addLocale, setLocale } from './locale.reducer'
 
-// @TODO: cookie namespace should come as a setting
-const getCookieName = () => (dispatch, getState) => {
-    const { app } = getState()
-    return `${app.scope}-locale`
-}
+const isCacheValid = ctime => (dispatch, getState) => {
+    const { locale } = getState()
+    const { cacheDuration } = locale
 
-// @TODO: cache life should come as setting
-const isCacheValid = ctime => () =>
-    (new Date() - new Date(ctime)) < 5000
+    return (new Date() - new Date(ctime)) < cacheDuration
+}
 
 const localeExists = (desiredLocale) => (dispatch, getState) => {
     const { locale } = getState()
@@ -28,44 +22,26 @@ const localeExists = (desiredLocale) => (dispatch, getState) => {
 }
 
 const getCurrentLocale = () => (dispatch, getState) => {
-    const { ssr, locale } = getState()
-    const cookieName = dispatch(getCookieName())
-
-    if (ssr.isClient()) {
-        return Cookie.get(cookieName) || locale.current
-    }
-
-    if (ssr.isServer()) {
-        return ssr.getRequestHandler().cookies[cookieName] || locale.current
-    }
+    const { locale } = getState()
+    return dispatch(cookie.get('locale', locale.current))
 }
 
-const setCurrentLocale = (locale) => (dispatch, getState) => {
-    const { ssr } = getState()
-    const cookieName = dispatch(getCookieName())
-
+const setCurrentLocale = (locale) => (dispatch) => {
     dispatch(setLocale(locale))
-
-    if (ssr.isClient()) {
-        Cookie.set(cookieName, locale)
-    }
-
-    if (ssr.isServer()) {
-        ssr.getResponseHandler().cookie(cookieName, locale)
-    }
+    dispatch(cookie.set('locale', locale))
 }
 
-const addLocaleData = (locale) => (dispatch, getState) => {
-    const { ssr } = getState()
-    const ctime = locale.ctime || new Date()
+const addLocaleData = (record) => (dispatch, getState) => {
+    const { locale } = getState()
+    const ctime = record.ctime || new Date()
 
-    dispatch(addLocale(locale.locale, locale.messages, ctime))
+    dispatch(addLocale(record.locale, record.messages, ctime))
 
-    if (ssr.isClient()) {
-        localStorage.setItem(`locale::cache::${locale.locale}`, {
-            ...locale,
+    if (locale.cacheLocal === true) {
+        dispatch(localStorage.setItem(`locale::cache::${record.locale}`, {
+            ...record,
             ctime,
-        })
+        }))
     }
 }
 
@@ -75,8 +51,6 @@ export const fetchLocale = (locale) => async (dispatch) => {
 }
 
 export const loadLocale = (desiredLocale) => async (dispatch, getState) => {
-    const { ssr } = getState()
-
     // try switch in-memory
     if (dispatch(localeExists(desiredLocale))) {
         dispatch(setCurrentLocale(desiredLocale))
@@ -86,15 +60,13 @@ export const loadLocale = (desiredLocale) => async (dispatch, getState) => {
     let cachedData = null
     let remoteData = null
 
-    // fetch offline cache
-    if (ssr.isClient()) {
-        try {
-            cachedData = localStorage.getItem(`locale::cache::${desiredLocale}`)
-            if (cachedData && dispatch(isCacheValid(cachedData.ctime))) {
-                remoteData = cachedData
-            }
-        } catch (err) {} // eslint-disable-line
-    }
+    // try load from local storaged cache
+    try {
+        cachedData = dispatch(localStorage.getItem(`locale::cache::${desiredLocale}`))
+        if (cachedData && dispatch(isCacheValid(cachedData.ctime))) {
+            remoteData = cachedData
+        }
+    } catch (err) {} // eslint-disable-line
 
     // fetch from the server
     if (!remoteData) {

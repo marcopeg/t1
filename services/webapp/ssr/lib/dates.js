@@ -1,5 +1,5 @@
 
-const zeroPad = d => ("0" + d).slice(-2)
+const zeroPad = d => ('0' + d).slice(-2)
 
 export const date2obj = date => ({
     YYYY: date.getUTCFullYear(),

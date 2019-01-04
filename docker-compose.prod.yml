@@ -30,6 +30,8 @@ services:
             NODE_ENV: production
             BABEL_ENV: node
             LOG_LEVEL: ${LOG_LEVEL:-error}
+            APP_NAME: ${APP_NAME}
+            APP_ID: ${APP_ID}
             REACT_SSR: ${REACT_SSR:-yes}
             PG_HOST: postgres
             PG_PORT: 5432

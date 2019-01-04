@@ -2,6 +2,8 @@
 export const initialState = {
     current: 'en',
     locales: {},
+    cacheLocal: false,
+    cacheDuration: 86400000, // 24h
 }
 
 /**

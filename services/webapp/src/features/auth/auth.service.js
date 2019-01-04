@@ -1,19 +1,19 @@
 import { runQuery } from 'lib/http'
-import localStorage from 'lib/local-storage'
+import { localStorage } from 'features/storage'
 import loginMutation from './queries/login.mutation'
 import logoutMutation from './queries/logout.mutation'
 import { setLogin } from './reducers/auth.reducer'
 
 // removes all the current session informations
-const cleanSession = () => (dispatch) => {
+const clearSession = () => (dispatch) => {
     dispatch({ type: '@reset' })
-    localStorage.removeItem('auth::session')
+    dispatch(localStorage.removeItem('auth::session'))
 }
 
 const persistSession = session => (dispatch) => {
-    dispatch(cleanSession())
+    dispatch(clearSession())
     dispatch(setLogin(session))
-    localStorage.setItem('auth::session', session)
+    dispatch(localStorage.setItem('auth::session', session))
 }
 
 export const login = (uname, passw) => async (dispatch) => {
@@ -38,7 +38,7 @@ export const login = (uname, passw) => async (dispatch) => {
 export const logout = () => async (dispatch) => {
     try {
         await dispatch(runQuery(logoutMutation))
-        dispatch(cleanSession())
+        dispatch(clearSession())
 
         return {
             success: 'true',
@@ -53,13 +53,7 @@ export const logout = () => async (dispatch) => {
 
 // restore session from localStorage
 export const start = () => (dispatch, getState) => {
-    const { ssr } = getState()
-
-    if (ssr.isServer()) {
-        return
-    }
-
-    const session = localStorage.getItem('auth::session')
+    const session = dispatch(localStorage.getItem('auth::session'))
     if (session) {
         dispatch(setLogin(session))
     }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Provider } from 'react-redux'
 import { Router } from 'react-router-dom'
-import App from './App'
+import App from './app/App'
 
 const Root = ({ store, history, ...props }) => (
     <Provider store={store}>

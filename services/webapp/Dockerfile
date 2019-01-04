@@ -21,12 +21,12 @@ ARG REACT_APP_NAME
 # NPM Install for building
 WORKDIR /usr/src/app-build
 ADD package.json /usr/src/app-build/package.json
-RUN npm install
+RUN yarn install
 
 # NPM Install for production
 WORKDIR /usr/src/app-run
 ADD package.json /usr/src/app-run/package.json
-RUN npm install --only=production
+RUN yarn install --production=true
 
 # Copy source files:
 WORKDIR /usr/src/app-build
