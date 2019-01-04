@@ -61,7 +61,7 @@ registerAction(SETTINGS, {
             nodeEnv: config.get('NODE_ENV'),
             port: config.get('SERVER_PORT'),
             cookieHelper: {
-                scope: 't1',
+                scope: String(config.get('APP_ID')),
                 duration: String(config.get('LOGIN_DURATION')),
             },
             deviceId: {
@@ -74,8 +74,10 @@ registerAction(SETTINGS, {
             reactSSR: {
                 initialState: {
                     app: {
-                        scope: 'trackp',
-                        name: 'TrackApp***',
+                        name: String(config.get('APP_NAME')),
+                    },
+                    storage: {
+                        scope: String(config.get('APP_ID')),
                     },
                 },
             },

@@ -7,24 +7,28 @@ export const cookieHelper = ({ scope, duration }) =>
         const isDev = [ 'development', 'test' ].indexOf(process.env.NODE_ENV) !== -1
 
         const options = {
-            httpOnly: true,
-            secure: !isDev,
-            maxAge: millisecond(duration),
+            app: {
+                httpOnly: true,
+                secure: !isDev,
+                maxAge: millisecond(duration),
+            },
+            client: {
+                maxAge: millisecond(duration),
+            },
         }
 
-        // @TODO: prefix from env variable
-        const getName = name => `${scope || 'xxx'}::${name}`
+        const getAppName = name => `${scope || 'xxx'}::${name}`
+        const getClientName = name => `${scope || 'xxx'}--${name}`
 
-        // Set cookie
-        res.setAppCookie = (name, content) => {
-            res.cookie(getName(name), content, options)
-        }
+        // App Cookie
+        res.setAppCookie = (name, content) => res.cookie(getAppName(name), content, options.app)
+        req.getAppCookie = name => req.cookies[getAppName(name)]
+        res.deleteAppCookie = name => res.clearCookie(getAppName(name))
 
-        // Delete cookie
-        res.deleteAppCookie = name => res.clearCookie(getName(name))
-
-        // Retrieve cookoe
-        req.getAppCookie = name => req.cookies[getName(name)]
+        // Client Cookie
+        res.setClientCookie = (name, content) => res.cookie(getClientName(name), content, options.client)
+        req.getClientCookie = name => req.cookies[getClientName(name)]
+        res.deleteClientCookie = name => res.clearCookie(getClientName(name))
 
         next()
     }

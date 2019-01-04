@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import createHistory from 'history/createBrowserHistory'
-import { createState } from 'lib/state'
-import './lib/locale'
+import { createState } from './app/state'
+import './app/locale'
 
 const boot = props => {
     const renderApp = () => {
@@ -17,7 +17,9 @@ const boot = props => {
     renderApp()
 }
 
-const initialState = window.__REDUX_INITIAL_STATE__ || {}
+const initialState = window.__REDUX_INITIAL_STATE__ || {
+    storage: { scope: 'trkr-wbpk' },
+}
 const history = createHistory()
 
 createState(initialState, history)

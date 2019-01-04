@@ -1,5 +1,12 @@
 import createSSRState from '@marcopeg/react-ssr/lib/create-ssr-state'
-import features from '../features'
+
+const features = [
+    require('features/storage'),
+    require('features/locale'),
+    require('features/auth'),
+    require('features/pages'),
+    require('features/mobile'),
+]
 
 const app = (state = {
     scope: 'tracker',
