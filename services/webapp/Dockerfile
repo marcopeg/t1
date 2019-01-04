@@ -26,6 +26,7 @@ RUN yarn install
 # NPM Install for production
 WORKDIR /usr/src/app-run
 ADD package.json /usr/src/app-run/package.json
+RUN cp /usr/src/app-build/yarn.lock ./
 RUN yarn install --production=true
 
 # Copy source files:
@@ -37,6 +38,7 @@ ADD .eslintrc /usr/src/app-build/.eslintrc
 ADD .eslintignore /usr/src/app-build/.eslintignore
 ADD webpack.config.extend.js /usr/src/app-build
 ADD webpackDevServer.config.extend.js /usr/src/app-build
+ADD react-intl-pack.js /usr/src/app-build
 
 # Build backend
 WORKDIR /usr/src/app-build
@@ -74,7 +76,4 @@ ADD index.js /usr/src/app
 
 # Default environment configuration:
 EXPOSE 8080
-#ENV NODE_ENV=production
-#ENV REACT_SSR=true
-
 CMD node index.js
