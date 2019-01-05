@@ -7,8 +7,9 @@ import loginMutation from './graphql/login.mutation'
 import { shouldRender, getCacheKey } from './lib/ssr'
 
 // list of hooks that I plan to use here
-import { EXPRESS_SSR, EXPRESS_GRAPHQL } from 'ssr/services/express/hooks'
+import { EXPRESS_MIDDLEWARE, EXPRESS_SSR, EXPRESS_GRAPHQL } from 'ssr/services/express/hooks'
 import { POSTGRES_BEFORE_START } from 'ssr/services/postgres/hooks'
+import { getSessionMiddleware } from './lib/session'
 
 const FEATURE_NAME = `${FEATURE} auth`
 
@@ -30,7 +31,11 @@ export const register = ({ registerAction }) => {
         },
     })
 
-    // '→ express/ssr'
+    registerAction(EXPRESS_MIDDLEWARE, {
+        action: FEATURE_NAME,
+        handler: ({ app }) => app.use(getSessionMiddleware()),
+    })
+
     registerAction(EXPRESS_SSR, {
         action: FEATURE_NAME,
         handler: ({ options }) => {

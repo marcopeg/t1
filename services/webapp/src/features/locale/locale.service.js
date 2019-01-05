@@ -23,12 +23,30 @@ const localeExists = (desiredLocale) => (dispatch, getState) => {
 
 const getCurrentLocale = () => (dispatch, getState) => {
     const { locale } = getState()
-    return dispatch(cookie.get('locale', locale.current))
+    const cookieLocale = dispatch(cookie.get('locale', locale.locale))
+
+    // translate from ssr compatible format stored in cookie
+    const tokens = cookieLocale.toLowerCase().split('_')
+    if (tokens.length === 1) {
+        return tokens[0].toLowerCase()
+    } else if (tokens[0] === tokens[1]) {
+        return tokens[0]
+    } else {
+        return `${tokens[0]}-${tokens[1]}`
+    }
 }
 
 const setCurrentLocale = (locale) => (dispatch) => {
     dispatch(setLocale(locale))
-    dispatch(cookie.set('locale', locale))
+
+    // translate to ssr compatible format to be persisted in cookie
+    const tokens = locale.split('-')
+    const cookieLocale = [
+        tokens[0].toLowerCase(),
+        (tokens[1] ? tokens[1] : tokens[0]).toUpperCase(),
+    ].join('_')
+
+    dispatch(cookie.set('locale', cookieLocale))
 }
 
 const addLocaleData = (record) => (dispatch, getState) => {

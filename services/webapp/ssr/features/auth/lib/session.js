@@ -6,20 +6,20 @@ const COOKIE_NAME = 'auth::login'
 export const getSession = async (req, res) => {
     try {
         // handle multiple calls
-        if (req.data.session) {
-            return req.data.session
+        if (req.session) {
+            return req.session
         }
 
         const token = req.getAppCookie(COOKIE_NAME)
         const data = await jwtService.verify(token)
 
-        req.data.session = {
+        req.session = {
             id: data.payload.id,
             created: new Date(data.iat * 1000),
             expiry: new Date(data.exp * 1000),
         }
 
-        return req.data.session
+        return req.session
     } catch (err) {
         return null
     }
@@ -37,14 +37,19 @@ export const validateSession = async (req, res) => {
         const newData = await jwtService.verify(newToken)
         res.setAppCookie(COOKIE_NAME, newToken)
 
-        req.data.session = {
+        req.session = {
             id: newData.payload.id,
             created: new Date(newData.iat * 1000),
             expiry: new Date(newData.exp * 1000),
         }
 
-        return req.data.session
+        return req.session
     } catch (err) {
         return null
     }
+}
+
+export const getSessionMiddleware = () => async (req, res, next) => {
+    await getSession(req, res)
+    next()
 }

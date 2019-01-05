@@ -8,23 +8,31 @@ import {
 } from 'graphql'
 
 import GraphQLJSON from 'graphql-type-json'
-
 import { EXPRESS_GRAPHQL } from 'ssr/services/express/hooks'
 
-const loadMessages = (locale) => new Promise((resolve, reject) => {
-    const filePath = path.join(process.cwd(), 'build', 'locale', `${locale}.json`)
-    fs.readFile(filePath, 'utf8', (err, data) => {
-        if (err) {
-            reject(`localization "${locale}" not available`)
-            return
-        }
-        try {
-            resolve(JSON.parse(data))
-        } catch (err) {
-            reject(`localization "${locale}" is corrupted`)
-        }
-    })
+const loadLocaleFile = (locale) => new Promise((resolve, reject) => {
+    const origin = (process.env.NODE_ENV === 'development' && locale !== 'en')
+        ? 'public'
+        : 'build'
+    const filePath = path.join(process.cwd(), origin, 'locale', `${locale.toLowerCase()}.json`)
+    fs.readFile(filePath, 'utf8', (err, data) => err ? reject(err) : resolve(data))
 })
+
+const loadMessages = async (locale) => {
+    let data = null
+
+    try {
+        data = await loadLocaleFile(locale)
+    } catch (err) {
+        throw new Error(`localization "${locale}" not available`)
+    }
+
+    try {
+        return JSON.parse(data)
+    } catch (err) {
+        throw new Error(`localization "${locale}" is corrupted`)
+    }
+}
 
 const localeQuery = {
     description: 'Provides localized messages',
@@ -50,11 +58,11 @@ const localeQuery = {
     }),
 }
 
-export const register = ({ registerAction }) => {
+export const register = ({ registerAction }) =>
     registerAction(EXPRESS_GRAPHQL, {
         action: '▶ locale',
         handler: ({ queries }) => {
             queries.locale = localeQuery
         },
     })
-}
+

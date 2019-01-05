@@ -1,3 +1,4 @@
+import path from 'path'
 import * as config from '@marcopeg/utils/lib/config'
 import {
     registerAction,
@@ -16,7 +17,9 @@ const services = [
     require('./services/hash'),
     require('./services/jwt'),
     require('./services/postgres'),
+    require('./services/express/static'),
     require('./services/express/cookie-helper'),
+    require('./services/express/locale'),
     require('./services/express/device-id'),
     require('./services/express/graphql'),
     require('./services/express/graphql-test'),
@@ -25,8 +28,8 @@ const services = [
 ]
 
 const features = [
-    require('./features/foo'),
-    require('./features/fii'),
+    // require('./features/foo'),
+    // require('./features/fii'),
     require('./features/locale'),
     require('./features/tracker'),
     require('./features/auth'),
@@ -60,6 +63,23 @@ registerAction(SETTINGS, {
         settings.express = {
             nodeEnv: config.get('NODE_ENV'),
             port: config.get('SERVER_PORT'),
+            static: [
+                {
+                    path: '/static',
+                    source: path.join(process.cwd(), 'build', 'static'),
+                },
+                {
+                    path: '/manifest.json',
+                    source: path.join(process.cwd(), 'build'),
+                },
+                {
+                    path: '/favicon.ico',
+                    source: path.join(process.cwd(), 'build'),
+                },
+            ],
+            locale: {
+                cookieName: `${String(config.get('APP_ID'))}--locale`,
+            },
             cookieHelper: {
                 scope: String(config.get('APP_ID')),
                 duration: String(config.get('LOGIN_DURATION')),
@@ -92,18 +112,7 @@ registerAction(SETTINGS, {
 
 registerAction(FINISH, {
     action: '♦ boot',
-    handler: () => {
-        // console.log('')
-        // console.log('')
-        // console.log('Boot Trace:')
-        // console.log('=================')
-        // console.log(traceHook()('compact')('cli').join('\n'))
-        // console.log('')
-        // console.log('')
-        logBoot()
-        // console.log(JSON.stringify(traceHook()('full')('json')))
-        // console.log(traceHook.getHooks('service/server/routes'))
-    },
+    handler: () => logBoot(),
 })
 
 export default createHookApp({
