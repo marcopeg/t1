@@ -38,5 +38,5 @@ export default {
             },
         },
     }))),
-    resolve: (params, args, { req }) => getDailyLogs(req.data.session.id, args.date, args.period),
+    resolve: (params, args, { req }) => getDailyLogs(req.session.id, args.date, args.period),
 }

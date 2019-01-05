@@ -1,26 +1,28 @@
+/* eslint-disable */
+
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { IntlProvider } from 'react-intl'
 
 const mapState = ({ locale }) => ({
-    current: locale.current,
-    messages: locale.locales[locale.current]
-        ? locale.locales[locale.current].messages
+    locale: locale.locale,
+    messages: locale.locales[locale.locale]
+        ? locale.locales[locale.locale].messages
         : {},
 })
 
-const LocaleProvider = ({ current, messages, children }) => (
+const LocaleProvider = ({ locale, messages, children }) => (
     <IntlProvider
-        locale={current}
+        locale={locale}
         messages={messages}
     >
-        {typeof children === 'function' ? children(current) : children}
+        {typeof children === 'function' ? children(locale) : children}
     </IntlProvider>
 )
 
 LocaleProvider.propTypes = {
-    current: PropTypes.string.isRequired,
+    locale: PropTypes.string.isRequired,
     messages: PropTypes.object.isRequired,
     children: PropTypes.any.isRequired, // eslint-disable-line
 }

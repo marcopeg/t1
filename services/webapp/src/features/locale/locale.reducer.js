@@ -1,6 +1,6 @@
 
 export const initialState = {
-    current: 'en',
+    locale: 'en',
     locales: {},
     cacheLocal: false,
     cacheDuration: 86400000, // 24h
@@ -13,9 +13,9 @@ export const initialState = {
 export const SET_LOCALE = 'setLocale@locale'
 export const ADD_LOCALE = 'addLocale@locale'
 
-export const setLocale = value => ({
+export const setLocale = locale => ({
     type: SET_LOCALE,
-    payload: { value },
+    payload: { locale },
 })
 
 export const addLocale = (key, value, ctime) => ({
@@ -31,7 +31,7 @@ export const addLocale = (key, value, ctime) => ({
 export const actionHandlers = {
     [SET_LOCALE]: (state, { payload }) => ({
         ...state,
-        current: payload.value,
+        locale: payload.locale.toLowerCase().replace('_', '-'),
     }),
     [ADD_LOCALE]: (state, { payload }) => ({
         ...state,

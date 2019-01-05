@@ -36,5 +36,5 @@ export default {
     },
     type: GraphQLBoolean,
     resolve: (params, args, { req }) =>
-        trackDaily(req.data.session.id, args.date, args.records),
+        trackDaily(req.session.id, args.date, args.records),
 }

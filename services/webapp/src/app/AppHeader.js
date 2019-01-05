@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet'
 
 const mapState = ({ app, locale }) => ({
     title: app.name,
-    lang: locale.current,
+    lang: locale.locale,
 })
 
 const Head = ({ title, lang }) => (
