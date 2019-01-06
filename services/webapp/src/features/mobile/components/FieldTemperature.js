@@ -1,17 +1,30 @@
 /* eslint-disable */
 
 import React from 'react'
-import { Input } from 'components/MobilePage'
+import { Title, Text, Button } from 'components/MobilePage'
 
-const FieldTemperature = ({ name, value, defaultValue, setValue }) => {
-    console.log(name, value, defaultValue)
+const FieldTemperature = ({ name, label, value, defaultValue, setValue }) => {
+    const getValue = () =>
+        Math.round(parseFloat(value || defaultValue) * 100) / 100
+
+    const increment = () =>
+        setValue(getValue() + 0.1)
+    
+    const decrement = () =>
+        setValue(getValue() - 0.1)
+
     return (
-        <div style={{ border: '1px solid #ddd', padding: 10 }}>
-            FieldTemperature:
-            <Input
-                value={value || defaultValue}
-                onChange={(e) => setValue(e.target.value)}
-            />
+        <div>
+            <Title>{label}</Title>
+            <div style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignContent: 'center',
+            }}>
+                <Button onClick={decrement}>-</Button>
+                <Text size={'xl'}>{getValue()}</Text>
+                <Button onClick={increment}>+</Button>
+            </div>
         </div>
     )
 }

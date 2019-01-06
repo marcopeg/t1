@@ -18,9 +18,6 @@ const mapState = ({ dailyRecords }) => ({
 const FieldsList = ({ fields, values }) => {
     const [ currentValues, setCurrentValues ] = useState({})
 
-    console.log('values - ', currentValues)
-    console.log(fields)
-
     const setFieldValue = (name, value) => {
         setCurrentValues({
             ...currentValues,
@@ -33,7 +30,6 @@ const FieldsList = ({ fields, values }) => {
             {fields
                 .filter(field => fieldTypes[field.type])
                 .map(field => {
-                    console.log(field)
                     return React.createElement(fieldTypes[field.type], {
                         ...field,
                         value: currentValues[field.name],
