@@ -1,4 +1,4 @@
-import { runQuery } from 'lib/http'
+import { runQuery } from 'features/network'
 import { localStorage } from 'features/storage'
 import loginMutation from './queries/login.mutation'
 import logoutMutation from './queries/logout.mutation'
@@ -19,7 +19,7 @@ const persistSession = session => (dispatch) => {
 export const login = (uname, passw) => async (dispatch) => {
     try {
         const res = await dispatch(runQuery(loginMutation, { uname, passw }))
-        const session = res.login
+        const session = res.data.login
 
         dispatch(persistSession(session))
 

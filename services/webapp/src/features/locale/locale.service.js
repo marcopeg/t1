@@ -1,4 +1,4 @@
-import { runQuery } from 'lib/http'
+import { runQuery } from 'features/network'
 import { cookie, localStorage } from 'features/storage'
 import localeQuery from './locale.query'
 import { addLocale, setLocale } from './locale.reducer'
@@ -65,7 +65,7 @@ const addLocaleData = (record) => (dispatch, getState) => {
 
 export const fetchLocale = (locale) => async (dispatch) => {
     const res = await dispatch(runQuery(localeQuery, { locale }))
-    return res.locale
+    return res.data.locale
 }
 
 export const loadLocale = (desiredLocale) => async (dispatch, getState) => {
