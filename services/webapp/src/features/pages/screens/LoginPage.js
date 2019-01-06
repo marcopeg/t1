@@ -124,7 +124,7 @@ const LoginPage = ({ hasLogin, doLogin, doConfirm, intl }) => {
                             )}
                         </div>
                         {status && status.errorMsg ? (
-                            <Text>{status.errorMsg}</Text>
+                            <Text type="danger">{status.errorMsg}</Text>
                         ) : null}
                     </div>
                 </div>
