@@ -53,8 +53,34 @@ const options = {
                 user.passw = await encode(user.passw)
             }
         },
+        beforeBulkUpdate: async (change) => {
+            if (change.attributes.passw) {
+                change.attributes.passw = await encode(change.attributes.passw)
+            }
+        },
     },
 }
+
+const register = (conn, Model) => (values) =>
+    Model.create(values, {
+        fields: [
+            'uname',
+            'passw',
+            'status',
+        ],
+        raw: true,
+    })
+
+const updateByUsername = (conn, Model) => (uname, values) =>
+    Model.update(values, {
+        where: { uname },
+        fields: [
+            'passw',
+            'status',
+        ],
+        returning: true,
+        raw: true,
+    })
 
 const findLogin = (conn, Model) => async (uname, passw) => {
     const record = await Model.findOne({
@@ -96,6 +122,7 @@ const validateSession = (conn, Model) => async (userId, etag, status = [ 0, 1 ])
             status: { [Sequelize.Op.in]: status },
         },
         raw: true,
+        // logging: console.log,
     })
 
     if (!record) {
@@ -107,6 +134,8 @@ const validateSession = (conn, Model) => async (userId, etag, status = [ 0, 1 ])
 
 export const init = (conn) => {
     const Model = conn.define(name, fields, options)
+    Model.register = register(conn, Model)
+    Model.updateByUsername = updateByUsername(conn, Model)
     Model.findLogin = findLogin(conn, Model)
     Model.bumpLastLogin = bumpLastLogin(conn, Model)
     Model.validateSession = validateSession(conn, Model)

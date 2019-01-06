@@ -4,10 +4,12 @@ import sessionQuery from './graphql/session.query'
 import sessionMutation from './graphql/session.mutation'
 import authMutation from './graphql/auth.mutation'
 import loginMutation from './graphql/login.mutation'
+import createTestUserMutation from './graphql/test.create-user.mutation'
+import updateTestUserMutation from './graphql/test.update-user.mutation'
 import { shouldRender, getCacheKey } from './lib/ssr'
 
 // list of hooks that I plan to use here
-import { EXPRESS_MIDDLEWARE, EXPRESS_SSR, EXPRESS_GRAPHQL } from 'ssr/services/express/hooks'
+import { EXPRESS_MIDDLEWARE, EXPRESS_SSR, EXPRESS_GRAPHQL, EXPRESS_GRAPHQL_TEST } from 'ssr/services/express/hooks'
 import { POSTGRES_BEFORE_START } from 'ssr/services/postgres/hooks'
 import { getSessionMiddleware } from './lib/session'
 
@@ -28,6 +30,14 @@ export const register = ({ registerAction }) => {
             mutations.session = await sessionMutation()
             mutations.auth = authMutation
             mutations.login = loginMutation
+        },
+    })
+
+    registerAction(EXPRESS_GRAPHQL_TEST, {
+        action: FEATURE_NAME,
+        handler: async ({ queries, mutations }) => {
+            mutations.createAuthUser = createTestUserMutation
+            mutations.updateAuthUser = updateTestUserMutation
         },
     })
 
