@@ -1,41 +1,24 @@
-/* eslint-disable */
-
 import React from 'react'
-import { connect } from 'react-redux'
-import MobilePage, { Button, Space, Divider, Title, Text, mixins } from 'components/MobilePage'
-import { logout } from 'features/auth'
-import { DailyRecords } from 'features/records'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import MobilePage, { Button } from 'components/MobilePage'
 
-const styles = {
-    wrapper: {
-        ...mixins.flexCentered,
-        flex: 1,
-        flexDirection: 'column',
-        marginBottom: '50%',
-        marginRight: '20%',
-        marginLeft: '20%',
-    },
-    copy: {
-        textAlign: 'center',
-    },
-}
-
-const mapState = ({ app }) => ({
-    title: app.name,
+const mapState = ({ dailyRecords }) => ({
+    required: dailyRecords.required,
 })
 
 const mapDispatch = (dispatch, { history }) => ({
     goBack: () => history.goBack(),
 })
 
-const Dashboard = ({goBack }) => {
+const LogDaily = ({ required, goBack }) => {
     return (
         <MobilePage>
             <MobilePage.Header>
                 Log Daily
             </MobilePage.Header>
             <MobilePage.Body withPadding>
-                log dauy
+                {required.join(', ')}
             </MobilePage.Body>
             <MobilePage.Footer withPadding>
                 <Button
@@ -44,11 +27,16 @@ const Dashboard = ({goBack }) => {
                     size="small"
                     onClick={goBack}
                 >
-                    cancel
+                    CANCEL
                 </Button>
             </MobilePage.Footer>
         </MobilePage>
     )
 }
 
-export default connect(mapState, mapDispatch)(Dashboard)
+LogDaily.propTypes = {
+    required: PropTypes.arrayOf(PropTypes.string).isRequired,
+    goBack: PropTypes.func.isRequired,
+}
+
+export default connect(mapState, mapDispatch)(LogDaily)

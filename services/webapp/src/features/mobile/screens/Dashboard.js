@@ -1,24 +1,9 @@
-/* eslint-disable */
-
 import React from 'react'
-import { connect } from 'react-redux'
-import MobilePage, { Button, Space, Divider, Title, Text, mixins } from 'components/MobilePage'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import MobilePage, { Button, Title } from 'components/MobilePage'
 import { logout } from 'features/auth'
-import { DailyRecords } from 'features/records'
-
-const styles = {
-    wrapper: {
-        ...mixins.flexCentered,
-        flex: 1,
-        flexDirection: 'column',
-        marginBottom: '50%',
-        marginRight: '20%',
-        marginLeft: '20%',
-    },
-    copy: {
-        textAlign: 'center',
-    },
-}
+import { DailyRecords } from 'features/records'
 
 const mapState = ({ app }) => ({
     title: app.name,
@@ -29,7 +14,7 @@ const mapDispatch = (dispatch, { history }) => ({
     doConfirm: () => setTimeout(() => history.replace('/')),
 })
 
-const Dashboard = ({ title, doLogout, doConfirm }) => {
+const Dashboard = ({ title, doLogout, doConfirm }) => {
     const handleLogout = async () => {
         await doLogout()
         doConfirm()
@@ -62,6 +47,12 @@ const Dashboard = ({ title, doLogout, doConfirm }) => {
             </MobilePage.Footer>
         </MobilePage>
     )
+}
+
+Dashboard.propTypes = {
+    title: PropTypes.string.isRequired,
+    doLogout: PropTypes.func.isRequired,
+    doConfirm: PropTypes.func.isRequired,
 }
 
 export default connect(mapState, mapDispatch)(Dashboard)

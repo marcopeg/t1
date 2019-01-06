@@ -1,4 +1,4 @@
-// import loadable from 'react-loadable'
+import loadable from 'react-loadable'
 
 import React from 'react'
 import PropTypes from 'prop-types'
@@ -6,14 +6,13 @@ import { connect } from 'react-redux'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
 import Dashboard from './screens/Dashboard'
-import LogDaily from './screens/LogDaily'
 
 const mapState = ({ auth }) => auth
 
-// const Signup = loadable({
-//     loader: () => import(/* webpackChunkName: "MobileSignup" */ './screens/Signup'),
-//     loading: () => 'loading...',
-// })
+const LogDaily = loadable({
+    loader: () => import(/* webpackChunkName: "LogDaily" */ './screens/LogDaily'),
+    loading: () => 'loading...',
+})
 
 const AppMobile = ({ hasLogin }) =>
     hasLogin
@@ -29,8 +28,7 @@ AppMobile.propTypes = {
     hasLogin: PropTypes.bool.isRequired,
 }
 
-// Preload modules
-// Signup.preload()
-// MobilePrograms.preload()
-
 export default connect(mapState)(AppMobile)
+
+// Preload modules
+LogDaily.preload()
