@@ -11,3 +11,4 @@ export const listeners = [
 ]
 
 export { login, logout } from './auth.service'
+export { SET_LOGIN } from './reducers/auth.reducer'

@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
 import Dashboard from './screens/Dashboard'
+import LogDaily from './screens/LogDaily'
 
 const mapState = ({ auth }) => auth
 
@@ -18,6 +19,7 @@ const AppMobile = ({ hasLogin }) =>
     hasLogin
         ? (
             <Switch>
+                <Route path={'/m/log/daily'} component={LogDaily} />
                 <Route path={'/m'} component={Dashboard} />
             </Switch>
         )

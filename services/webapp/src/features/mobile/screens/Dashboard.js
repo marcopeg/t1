@@ -4,6 +4,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import MobilePage, { Button, Space, Divider, Title, Text, mixins } from 'components/MobilePage'
 import { logout } from 'features/auth'
+import { DailyRecords } from 'features/records'
 
 const styles = {
     wrapper: {
@@ -40,7 +41,14 @@ const Dashboard = ({ title, doLogout, doConfirm }) => {
                 {title}
             </MobilePage.Header>
             <MobilePage.Body withPadding>
-                Dashboard
+                <Title>Dashboard</Title>
+                <DailyRecords>
+                    {({ records, completed }) => (
+                        records.length
+                            ? <div>{records.length} records;  {completed * 100}% completed</div>
+                            : <Button linkTo="/m/log/daily">Add record</Button>
+                    )}
+                </DailyRecords>
             </MobilePage.Body>
             <MobilePage.Footer withPadding>
                 <Button

@@ -5,6 +5,7 @@ const features = [
     require('features/network'),
     require('features/locale'),
     require('features/auth'),
+    require('features/records'),
     require('features/pages'),
     require('features/mobile'),
 ]
