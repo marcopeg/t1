@@ -6,9 +6,9 @@ import MobilePage from '../MobilePage.style'
 import PageHeader from '../components/PageHeader/PageHeader.style'
 import PageFooter from '../components/PageFooter/PageFooter.style'
 import PageBody from '../components/PageBody/PageBody.style'
-import title from '../components/Title/Title.style'
-import text from '../components/Text/Text.style'
-import space from '../components/Space/Space.style'
+import Title from '../components/Title/Title.style'
+import Text from '../components/Text/Text.style'
+import Space from '../components/Space/Space.style'
 import Divider from '../components/Divider/Divider.style'
 import Button from '../components/Button/Button.style'
 import Input from '../components/Input/Input.style'
@@ -35,9 +35,9 @@ const styles = {
         PageHeader,
         PageFooter,
         PageBody,
-        title,
-        text,
-        space,
+        Title,
+        Text,
+        Space,
         Divider,
         Button,
         Input,

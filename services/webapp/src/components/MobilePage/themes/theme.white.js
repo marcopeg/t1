@@ -9,12 +9,16 @@ export const colors = {
     textSecondary: '#757575',
     accent: '#03A9F4',
     divider: '#BDBDBD',
+    success: 'green',
+    warning: 'orange',
+    danger: 'red',
 }
 
 export const variables = {
     headerHeight: 45,
     footerHeight: 45,
     borderRadius: 3,
+    fontSize: 14,
 }
 
 export default {
@@ -99,5 +103,29 @@ export default {
         input: {
             fontWeight: 300,
         },
+    },
+    Text: {
+        'wrapper--primary': { color: colors.textPrimary },
+        'wrapper--secondary': { color: colors.primary },
+        'wrapper--success': { color: colors.success },
+        'wrapper--warning': { color: colors.warning },
+        'wrapper--danger': { color: colors.danger },
+        'wrapper--xs': { fontSize: variables.fontSize * 0.7 },
+        'wrapper--sm': { fontSize: variables.fontSize * 0.85 },
+        'wrapper--md': { fontSize: variables.fontSize },
+        'wrapper--lg': { fontSize: variables.fontSize * 1.15 },
+        'wrapper--xl': { fontSize: variables.fontSize * 1.3 },
+    },
+    Title: {
+        'wrapper--primary': { color: colors.textPrimary },
+        'wrapper--secondary': { color: colors.primary },
+        'wrapper--success': { color: colors.success },
+        'wrapper--warning': { color: colors.warning },
+        'wrapper--danger': { color: colors.danger },
+        'wrapper--xs': { fontSize: variables.fontSize * 0.7 },
+        'wrapper--sm': { fontSize: variables.fontSize * 0.85 },
+        'wrapper--md': { fontSize: variables.fontSize },
+        'wrapper--lg': { fontSize: variables.fontSize * 1.15 },
+        'wrapper--xl': { fontSize: variables.fontSize * 1.3 },
     },
 }
