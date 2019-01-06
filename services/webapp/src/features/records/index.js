@@ -10,3 +10,4 @@ export const listeners = [
 ]
 
 export { default as DailyRecords } from './containers/DailyRecords'
+export { default as DailyFields } from './containers/DailyFields'

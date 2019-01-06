@@ -1,10 +1,36 @@
 
 export const initialState = {
     records: {}, // { id: { ... }, id1: { ...}, ... }
-    required: [
-        'temperature',
-        'mood',
-        'foo',
+
+    // at one point this should become shomehow dynamic.
+    // the user should be able to set up her own page.
+    fields: [
+        {
+            name: 'temperature',
+            type: 'temperature',
+            label: 'Temperature',
+            isRequired: true,
+            defaultValue: 37,
+        }, {
+            name: 'mood',
+            type: 'options',
+            label: 'What is your mood?',
+            isRequired: false,
+            options: [
+                {
+                    name: 'good',
+                    value: 'green',
+                },
+                {
+                    name: 'meh',
+                    value: 'yellow',
+                },
+                {
+                    name: 'bad',
+                    value: 'red',
+                },
+            ],
+        },
     ],
 }
 
