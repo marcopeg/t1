@@ -5,5 +5,5 @@ export const parseRecords = records =>
         name,
         dateStr: date,
         date: new Date(date),
-        id: `${name}@${date}`,
+        key: `${name}@${date}`,
     }))
