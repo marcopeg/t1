@@ -2,9 +2,9 @@
 
 import { parseRecords } from './parse-records'
 import { groupByDay } from './group-by-day'
-import { r1 } from './records.fixture'
+import { r1 } from '../records.fixture'
 
-describe('records/lib/group-by-day', () => {
+describe('records/lib/records/group-by-day', () => {
     const parsed = parseRecords(r1)
     const grouped = groupByDay(parsed)
 

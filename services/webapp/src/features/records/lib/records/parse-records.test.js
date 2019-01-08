@@ -1,8 +1,8 @@
 /* eslint max-nested-callbacks:off */
 import { parseRecords } from './parse-records'
-import { r1 } from './records.fixture'
+import { r1 } from '../records.fixture'
 
-describe('records/lib/parse-records', () => {
+describe('records/lib/records/parse-records', () => {
     describe('record props', () => {
         const parsed = parseRecords(r1)
         const expectedProps = [

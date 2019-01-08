@@ -1,9 +1,9 @@
 /* eslint max-nested-callbacks:off */
 import { parseRecords } from './parse-records'
 import { mapRecords } from './map-records'
-import { r1 } from './records.fixture'
+import { r1 } from '../records.fixture'
 
-describe('records/lib/map-records', () => {
+describe('records/lib/records/map-records', () => {
     it('should reduce a list of records by "key', () => {
         const parsed = parseRecords(r1)
         const mapped = mapRecords(parsed)

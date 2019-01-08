@@ -2,9 +2,9 @@
 
 import { parseRecords } from './parse-records'
 import { getDaysList } from './get-days-list'
-import { r1 } from './records.fixture'
+import { r1 } from '../records.fixture'
 
-describe('records/lib/map-records', () => {
+describe('records/lib/records/map-records', () => {
     const parsed = parseRecords(r1)
     const days = getDaysList(parsed)
 
