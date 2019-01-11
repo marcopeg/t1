@@ -16,15 +16,17 @@ import { getSessionMiddleware } from './lib/session'
 const FEATURE_NAME = `${FEATURE} auth`
 
 export const register = ({ registerAction }) => {
-    registerAction(`${POSTGRES_BEFORE_START}/default`, {
-        action: FEATURE_NAME,
+    registerAction({
+        hook: `${POSTGRES_BEFORE_START}/default`,
+        name: FEATURE_NAME,
         handler: ({ options }) => {
             options.models.push(account)
         },
     })
 
-    registerAction(EXPRESS_GRAPHQL, {
-        action: FEATURE_NAME,
+    registerAction({
+        hook: EXPRESS_GRAPHQL,
+        name: FEATURE_NAME,
         handler: async ({ queries, mutations }) => {
             queries.session = await sessionQuery()
             mutations.session = await sessionMutation()
@@ -33,21 +35,24 @@ export const register = ({ registerAction }) => {
         },
     })
 
-    registerAction(EXPRESS_GRAPHQL_TEST, {
-        action: FEATURE_NAME,
+    registerAction({
+        hook: EXPRESS_GRAPHQL_TEST,
+        name: FEATURE_NAME,
         handler: async ({ queries, mutations }) => {
             mutations.createAuthUser = createTestUserMutation
             mutations.updateAuthUser = updateTestUserMutation
         },
     })
 
-    registerAction(EXPRESS_MIDDLEWARE, {
-        action: FEATURE_NAME,
+    registerAction({
+        hook: EXPRESS_MIDDLEWARE,
+        name: FEATURE_NAME,
         handler: ({ app }) => app.use(getSessionMiddleware()),
     })
 
-    registerAction(EXPRESS_SSR, {
-        action: FEATURE_NAME,
+    registerAction({
+        hook: EXPRESS_SSR,
+        name: FEATURE_NAME,
         handler: ({ options }) => {
             options.shouldRender = shouldRender
             options.getCacheKey = getCacheKey

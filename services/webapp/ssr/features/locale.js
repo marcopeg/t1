@@ -59,8 +59,9 @@ const localeQuery = {
 }
 
 export const register = ({ registerAction }) =>
-    registerAction(EXPRESS_GRAPHQL, {
-        action: '▶ locale',
+    registerAction({
+        hook: EXPRESS_GRAPHQL,
+        name: '▶ locale',
         handler: ({ queries }) => {
             queries.locale = localeQuery
         },

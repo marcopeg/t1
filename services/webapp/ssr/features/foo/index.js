@@ -3,15 +3,17 @@
 import { GraphQLString } from 'graphql'
 
 export const register = ({ registerAction, createHook }) => {
-    registerAction('▶ fii', {
-        action: '▶ foo',
+    registerAction({
+        hook: '▶ fii',
+        name: '▶ foo',
         handler: ({ data }) => {
             data.text += ' handled by foo'
         },
     })
 
-    registerAction('▶ auth/session/query', {
-        action: '▶ foo.feature',
+    registerAction({
+        hook: '▶ auth/session/query',
+        name: '▶ foo.feature',
         handler: ({ fields }) => {
             fields.foo = {
                 type: GraphQLString,
@@ -20,8 +22,9 @@ export const register = ({ registerAction, createHook }) => {
         },
     })
 
-    registerAction('▶ auth/afterLogin', {
-        action: '▶ foo.feature',
+    registerAction({
+        hook: '▶ auth/afterLogin',
+        name: '▶ foo.feature',
         handler: ({ id, lastLogin, token }) => {
             console.log('>> FOO ::', id, lastLogin, token)
         },

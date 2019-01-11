@@ -53,8 +53,9 @@ export const createGraphQLHandler = async () => {
 }
 
 export const register = ({ registerAction }) =>
-    registerAction(EXPRESS_ROUTE, {
-        action: EXPRESS_GRAPHQL,
+    registerAction({
+        hook: EXPRESS_ROUTE,
+        name: EXPRESS_GRAPHQL,
         trace: __filename,
         handler: async ({ app, settings }) => {
             const { mountPoint } = settings.graphql

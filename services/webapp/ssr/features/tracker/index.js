@@ -8,22 +8,25 @@ import trackDayMutation from './graphql/track-day.mutation'
 const FEATURE_NAME = `${FEATURE} tracker`
 
 export const register = ({ registerAction }) => {
-    registerAction(`${POSTGRES_BEFORE_START}/default`, {
-        action: FEATURE_NAME,
+    registerAction({
+        hook: `${POSTGRES_BEFORE_START}/default`,
+        name: FEATURE_NAME,
         handler: ({ options }) => {
             options.models.push(trackRecordDaily)
         },
     })
 
-    registerAction(AUTH_SESSION_QUERY, {
-        action: FEATURE_NAME,
+    registerAction({
+        hook: AUTH_SESSION_QUERY,
+        name: FEATURE_NAME,
         handler: ({ fields }) => {
             fields.tracker = trackerQuery
         },
     })
 
-    registerAction(AUTH_SESSION_MUTATION, {
-        action: FEATURE_NAME,
+    registerAction({
+        hook: AUTH_SESSION_MUTATION,
+        name: FEATURE_NAME,
         handler: ({ fields }) => {
             fields.trackDay = trackDayMutation
         },

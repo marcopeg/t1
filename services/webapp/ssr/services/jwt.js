@@ -37,8 +37,9 @@ export const verify = (token, customSecret = secret) =>
     })
 
 export const register = ({ registerAction }) =>
-    registerAction(INIT_SERVICES, {
-        action: `${SERVICE} jwt`,
+    registerAction({
+        hook: INIT_SERVICES,
+        name: `${SERVICE} jwt`,
         trace: __filename,
         handler: ({ jwt }) => init(jwt),
     })

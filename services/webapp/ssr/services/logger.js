@@ -16,14 +16,16 @@ const expressMiddleware = (req, res, next) => {
 }
 
 export const register = ({ registerAction }) => {
-    registerAction(START, {
-        action: `${SERVICE} logger`,
+    registerAction({
+        hook: START,
+        name: `${SERVICE} logger`,
         trace: __filename,
         handler: init,
     })
 
-    registerAction(EXPRESS_MIDDLEWARE, {
-        action: `${SERVICE} logger`,
+    registerAction({
+        hook: EXPRESS_MIDDLEWARE,
+        name: `${SERVICE} logger`,
         trace: __filename,
         handler: ({ app }) => app.use(expressMiddleware),
     })

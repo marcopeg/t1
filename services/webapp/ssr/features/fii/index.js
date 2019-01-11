@@ -4,16 +4,18 @@ import { GraphQLString } from 'graphql'
 import { traceHook, createHook } from '@marcopeg/hooks'
 
 export const register = ({ registerAction }) => {
-    registerAction('◇ init::features', {
-        action: 'fii',
+    registerAction({
+        hook: '◇ init::features',
+        name: 'fii',
         handler: () => {
             console.log('[fii] init')
             return 'fii value'
         },
     })
 
-    registerAction('→ express/routes', {
-        action: '▶ fii',
+    registerAction({
+        hook: '→ express/routes',
+        name: '▶ fii',
         handler: ({ app }) => {
             app.use('/fii', (req, res) => {
                 
@@ -35,8 +37,9 @@ export const register = ({ registerAction }) => {
         },
     })
 
-    registerAction('→ express/graphql', {
-        action: '▶ fii',
+    registerAction({
+        hook: '→ express/graphql',
+        name: '▶ fii',
         handler: ({ queries }) => {
             queries.fii = {
                 description: 'Provides fii functions',
@@ -46,8 +49,9 @@ export const register = ({ registerAction }) => {
         },
     })
     
-    registerAction('→ express/graphql-test', {
-        action: '▶ fii',
+    registerAction({
+        hook: '→ express/graphql-test',
+        name: '▶ fii',
         handler: ({ queries }) => {
             queries.fii = {
                 description: 'Provides fii functions',

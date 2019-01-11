@@ -13,8 +13,9 @@ export const deviceId = ({ scope, header }) => {
 }
 
 export const register = ({ registerAction }) =>
-    registerAction(EXPRESS_MIDDLEWARE, {
-        action: '→ express/device-id',
+    registerAction({
+        hook: EXPRESS_MIDDLEWARE,
+        name: '→ express/device-id',
         trace: __filename,
         handler: ({ app, settings }) => app.use(deviceId(settings.deviceId)),
     })

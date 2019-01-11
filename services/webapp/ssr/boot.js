@@ -35,8 +35,9 @@ const features = [
     require('./features/auth'),
 ]
 
-registerAction(SETTINGS, {
-    action: '♦ boot',
+registerAction({
+    hook: SETTINGS,
+    name: '♦ boot',
     handler: ({ settings }) => {
         settings.hash = {
             rounds: Number(config.get('BCRYPT_ROUNDS')),
@@ -110,8 +111,9 @@ registerAction(SETTINGS, {
     },
 })
 
-registerAction(FINISH, {
-    action: '♦ boot',
+registerAction({
+    hook: FINISH,
+    name: '♦ boot',
     handler: () => logBoot(),
 })
 

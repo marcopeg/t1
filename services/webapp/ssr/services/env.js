@@ -32,8 +32,9 @@ const initEnv = async (args) => {
 }
 
 export const register = ({ registerAction }) =>
-    registerAction(START, {
-        action: `${SERVICE} env`,
+    registerAction({
+        hook: START,
+        name: `${SERVICE} env`,
         trace: __filename,
         handler: initEnv,
     })

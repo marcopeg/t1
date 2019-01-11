@@ -834,9 +834,12 @@
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/@csstools/convert-colors/-/convert-colors-1.4.0.tgz#ad495dc41b12e75d588c6db8b9834f08fa131eb7"
 
-"@marcopeg/hooks@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@marcopeg/hooks/-/hooks-0.1.0.tgz#fdf4112f2a838c4b6bbbfe4517f10eda78832cd3"
+"@marcopeg/hooks@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/@marcopeg/hooks/-/hooks-0.2.2.tgz#f8967677505bc3d68408dec4787c27c1d4354168"
+  integrity sha512-yzDwXlREOhXkFVRqUVYwU/e4ijTFUAJbGqlI10Zxpm8yVUlmqL/PlQFCxcWqdoqOUbyfEHEMURXunNCPak0kMQ==
+  dependencies:
+    babel-runtime "^6.26.0"
 
 "@marcopeg/react-ssr@0.0.20":
   version "0.0.20"

@@ -43,8 +43,9 @@ export const encode = input => new Promise((resolve, reject) => {
 })
 
 export const register = ({ registerAction }) =>
-    registerAction(INIT_SERVICES, {
-        action: `${SERVICE} hash`,
+    registerAction({
+        hook: INIT_SERVICES,
+        name: `${SERVICE} hash`,
         trace: __filename,
         handler: ({ hash }) => init(hash),
     })

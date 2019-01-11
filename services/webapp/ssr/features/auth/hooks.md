@@ -4,8 +4,9 @@
 
 Fires after a valid login action took place.
 
-    registerAction('▶ auth/afterLogin', {
-        action: '▶ foo.feature',
+    registerAction({
+        hook: '▶ auth/afterLogin',
+        name: '▶ foo.feature',
         handler: ({ req, res, id, lastLogin, token }) => {
             console.log(id, lastLogin, token)
         },
@@ -16,8 +17,9 @@ Fires after a valid login action took place.
 Fires before the session cookie is dropped.  
 So fare there are no validations/informations on the current session.
 
-    registerAction('▶ auth/afterLogin', {
-        action: '▶ foo.feature',
+    registerAction({
+        hook: '▶ auth/afterLogin',
+        name: '▶ foo.feature',
         handler: ({ req, res }) => {
             ...
         },
@@ -27,8 +29,9 @@ So fare there are no validations/informations on the current session.
 
 Allow to inject new fields with custom resolvers inside the session query.
 
-    registerAction('▶ auth/session/query', {
-        action: '▶ foo.feature',
+    registerAction({
+        hook: '▶ auth/session/query',
+        name: '▶ foo.feature',
         handler: ({ fields }) => {
             fields.foo = {
                 type: GraphQLString,

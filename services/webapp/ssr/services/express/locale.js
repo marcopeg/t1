@@ -5,8 +5,9 @@ import { SERVICE } from '@marcopeg/hooks'
 import { EXPRESS_MIDDLEWARE } from 'ssr/services/express/hooks'
 
 export const register = ({ registerAction }) =>
-    registerAction(EXPRESS_MIDDLEWARE, {
-        action: `${SERVICE} express/locale`,
+    registerAction({
+        hook: EXPRESS_MIDDLEWARE,
+        name: `${SERVICE} express/locale`,
         handler: ({ app, settings }) => {
             const { locale } = settings
             const config = {

@@ -34,8 +34,9 @@ export const cookieHelper = ({ scope, duration }) =>
     }
 
 export const register = ({ registerAction }) =>
-    registerAction(EXPRESS_MIDDLEWARE, {
-        action: '→ express/cookie-helper',
+    registerAction({
+        hook: EXPRESS_MIDDLEWARE,
+        name: '→ express/cookie-helper',
         trace: __filename,
         handler: async ({ app, settings }) => {
             app.use(cookieParser())

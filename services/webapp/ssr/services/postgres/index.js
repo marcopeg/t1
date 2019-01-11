@@ -9,8 +9,9 @@ export { default as query } from './query'
 export { getModel, registerModel, resetModels } from './conn'
 
 export const register = ({ registerAction, createHook }) => {
-    registerAction(INIT_SERVICE, {
-        action: '→ postgres',
+    registerAction({
+        hook: INIT_SERVICE,
+        name: '→ postgres',
         trace: __filename,
         handler: async ({ postgres }) => {
             for (const options of postgres) {
@@ -21,8 +22,9 @@ export const register = ({ registerAction, createHook }) => {
         },
     })
 
-    registerAction(START_SERVICE, {
-        action: '→ postgres',
+    registerAction({
+        hook: START_SERVICE,
+        name: '→ postgres',
         trace: __filename,
         handler: async ({ postgres }) => {
             for (const options of postgres) {

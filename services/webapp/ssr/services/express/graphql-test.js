@@ -85,14 +85,16 @@ export const initGraphql = async ({ queries, mutations }) => {
 }
 
 export const register = ({ registerAction }) => {
-    registerAction(INIT_SERVICE, {
-        action: EXPRESS_GRAPHQL_TEST,
+    registerAction({
+        hook: INIT_SERVICE,
+        name: EXPRESS_GRAPHQL_TEST,
         trace: __filename,
         handler: ({ graphqlTest }) => init(graphqlTest),
     })
 
-    registerAction(EXPRESS_GRAPHQL, {
-        action: EXPRESS_GRAPHQL_TEST,
+    registerAction({
+        hook: EXPRESS_GRAPHQL,
+        name: EXPRESS_GRAPHQL_TEST,
         trace: __filename,
         handler: initGraphql,
     })

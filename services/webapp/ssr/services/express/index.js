@@ -49,14 +49,16 @@ export const start = (settings) => new Promise((resolve) => {
 })
 
 export const register = ({ registerAction }) => {
-    registerAction(INIT_SERVICE, {
-        action: '→ express',
+    registerAction({
+        hook: INIT_SERVICE,
+        name: '→ express',
         trace: __filename,
         handler: ({ express }) => init(express),
     })
 
-    registerAction(START_SERVICE, {
-        action: '→ express',
+    registerAction({
+        hook: START_SERVICE,
+        name: '→ express',
         trace: __filename,
         handler: ({ express }) => start(express),
     })
